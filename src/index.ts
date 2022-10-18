@@ -3,22 +3,22 @@ import { getAllCollections,
     getCollection, 
     addNewCollection, 
     updateCollection, 
-    deleteCollection } from './services/collectionServices.ts'
+    deleteCollection } from './services/collectionServices'
 
 const app = express()
 const port = 5000
 
 // get all collections
-app.get('/collections', async (_, res) => {
+app.get('/collections', async (req, res) => {
   const collections = await getAllCollections()
   res.send(collections)
 })
 
 // get a collection 
 app.get('/collections/:id', async (req, res) => {
-  let collectionId = req.params.id
-  let collection = await getCollection(collectionId)
-  res.status(200)
+  const collectionId = req.params.id
+  const collection = await getCollection(collectionId)
+  res.send(collection)
 })
 
 // add a collection
