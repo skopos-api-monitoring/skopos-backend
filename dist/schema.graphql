@@ -15,6 +15,14 @@ type AggregateAssertion {
   _sum: AssertionSumAggregate
 }
 
+type AggregateAssertionResults {
+  _avg: AssertionResultsAvgAggregate
+  _count: AssertionResultsCountAggregate
+  _max: AssertionResultsMaxAggregate
+  _min: AssertionResultsMinAggregate
+  _sum: AssertionResultsSumAggregate
+}
+
 type AggregateCollection {
   _avg: CollectionAvgAggregate
   _count: CollectionCountAggregate
@@ -48,6 +56,8 @@ type AggregateResponse {
 }
 
 type Assertion {
+  AssertionResults(cursor: AssertionResultsWhereUniqueInput, distinct: [AssertionResultsScalarFieldEnum!], orderBy: [AssertionResultsOrderByWithRelationInput!], skip: Int, take: Int, where: AssertionResultsWhereInput): [AssertionResults!]!
+  _count: AssertionCount
   createdAt: DateTime!
   expected: String!
   id: Int!
@@ -64,6 +74,10 @@ type AssertionAvgAggregate {
 input AssertionAvgOrderByAggregateInput {
   id: SortOrder
   requestId: SortOrder
+}
+
+type AssertionCount {
+  AssertionResults: Int!
 }
 
 type AssertionCountAggregate {
@@ -84,6 +98,7 @@ input AssertionCountOrderByAggregateInput {
 }
 
 input AssertionCreateInput {
+  AssertionResults: AssertionResultsCreateNestedManyWithoutAssertionInput
   createdAt: DateTime
   expected: String!
   property: String!
@@ -117,12 +132,31 @@ input AssertionCreateNestedManyWithoutRequestInput {
   createMany: AssertionCreateManyRequestInputEnvelope
 }
 
+input AssertionCreateNestedOneWithoutAssertionResultsInput {
+  connect: AssertionWhereUniqueInput
+  connectOrCreate: AssertionCreateOrConnectWithoutAssertionResultsInput
+  create: AssertionCreateWithoutAssertionResultsInput
+}
+
+input AssertionCreateOrConnectWithoutAssertionResultsInput {
+  create: AssertionCreateWithoutAssertionResultsInput!
+  where: AssertionWhereUniqueInput!
+}
+
 input AssertionCreateOrConnectWithoutRequestInput {
   create: AssertionCreateWithoutRequestInput!
   where: AssertionWhereUniqueInput!
 }
 
+input AssertionCreateWithoutAssertionResultsInput {
+  createdAt: DateTime
+  expected: String!
+  property: String!
+  request: RequestCreateNestedOneWithoutAssertionsInput!
+}
+
 input AssertionCreateWithoutRequestInput {
+  AssertionResults: AssertionResultsCreateNestedManyWithoutAssertionInput
   createdAt: DateTime
   expected: String!
   property: String!
@@ -197,12 +231,377 @@ input AssertionOrderByWithAggregationInput {
 }
 
 input AssertionOrderByWithRelationInput {
+  AssertionResults: AssertionResultsOrderByRelationAggregateInput
   createdAt: SortOrder
   expected: SortOrder
   id: SortOrder
   property: SortOrder
   request: RequestOrderByWithRelationInput
   requestId: SortOrder
+}
+
+input AssertionRelationFilter {
+  is: AssertionWhereInput
+  isNot: AssertionWhereInput
+}
+
+type AssertionResults {
+  actual: String!
+  assertion: Assertion!
+  assertionId: Int!
+  createdAt: DateTime!
+  id: Int!
+  pass: Boolean!
+  response: Response!
+  responseId: Int!
+}
+
+type AssertionResultsAvgAggregate {
+  assertionId: Float
+  id: Float
+  responseId: Float
+}
+
+input AssertionResultsAvgOrderByAggregateInput {
+  assertionId: SortOrder
+  id: SortOrder
+  responseId: SortOrder
+}
+
+type AssertionResultsCountAggregate {
+  _all: Int!
+  actual: Int!
+  assertionId: Int!
+  createdAt: Int!
+  id: Int!
+  pass: Int!
+  responseId: Int!
+}
+
+input AssertionResultsCountOrderByAggregateInput {
+  actual: SortOrder
+  assertionId: SortOrder
+  createdAt: SortOrder
+  id: SortOrder
+  pass: SortOrder
+  responseId: SortOrder
+}
+
+input AssertionResultsCreateInput {
+  actual: String!
+  assertion: AssertionCreateNestedOneWithoutAssertionResultsInput!
+  createdAt: DateTime!
+  pass: Boolean!
+  response: ResponseCreateNestedOneWithoutAssertionResultsInput!
+}
+
+input AssertionResultsCreateManyAssertionInput {
+  actual: String!
+  createdAt: DateTime!
+  id: Int
+  pass: Boolean!
+  responseId: Int!
+}
+
+input AssertionResultsCreateManyAssertionInputEnvelope {
+  data: [AssertionResultsCreateManyAssertionInput!]!
+  skipDuplicates: Boolean
+}
+
+input AssertionResultsCreateManyInput {
+  actual: String!
+  assertionId: Int!
+  createdAt: DateTime!
+  id: Int
+  pass: Boolean!
+  responseId: Int!
+}
+
+input AssertionResultsCreateManyResponseInput {
+  actual: String!
+  assertionId: Int!
+  createdAt: DateTime!
+  id: Int
+  pass: Boolean!
+}
+
+input AssertionResultsCreateManyResponseInputEnvelope {
+  data: [AssertionResultsCreateManyResponseInput!]!
+  skipDuplicates: Boolean
+}
+
+input AssertionResultsCreateNestedManyWithoutAssertionInput {
+  connect: [AssertionResultsWhereUniqueInput!]
+  connectOrCreate: [AssertionResultsCreateOrConnectWithoutAssertionInput!]
+  create: [AssertionResultsCreateWithoutAssertionInput!]
+  createMany: AssertionResultsCreateManyAssertionInputEnvelope
+}
+
+input AssertionResultsCreateNestedManyWithoutResponseInput {
+  connect: [AssertionResultsWhereUniqueInput!]
+  connectOrCreate: [AssertionResultsCreateOrConnectWithoutResponseInput!]
+  create: [AssertionResultsCreateWithoutResponseInput!]
+  createMany: AssertionResultsCreateManyResponseInputEnvelope
+}
+
+input AssertionResultsCreateOrConnectWithoutAssertionInput {
+  create: AssertionResultsCreateWithoutAssertionInput!
+  where: AssertionResultsWhereUniqueInput!
+}
+
+input AssertionResultsCreateOrConnectWithoutResponseInput {
+  create: AssertionResultsCreateWithoutResponseInput!
+  where: AssertionResultsWhereUniqueInput!
+}
+
+input AssertionResultsCreateWithoutAssertionInput {
+  actual: String!
+  createdAt: DateTime!
+  pass: Boolean!
+  response: ResponseCreateNestedOneWithoutAssertionResultsInput!
+}
+
+input AssertionResultsCreateWithoutResponseInput {
+  actual: String!
+  assertion: AssertionCreateNestedOneWithoutAssertionResultsInput!
+  createdAt: DateTime!
+  pass: Boolean!
+}
+
+type AssertionResultsGroupBy {
+  _avg: AssertionResultsAvgAggregate
+  _count: AssertionResultsCountAggregate
+  _max: AssertionResultsMaxAggregate
+  _min: AssertionResultsMinAggregate
+  _sum: AssertionResultsSumAggregate
+  actual: String!
+  assertionId: Int!
+  createdAt: DateTime!
+  id: Int!
+  pass: Boolean!
+  responseId: Int!
+}
+
+input AssertionResultsListRelationFilter {
+  every: AssertionResultsWhereInput
+  none: AssertionResultsWhereInput
+  some: AssertionResultsWhereInput
+}
+
+type AssertionResultsMaxAggregate {
+  actual: String
+  assertionId: Int
+  createdAt: DateTime
+  id: Int
+  pass: Boolean
+  responseId: Int
+}
+
+input AssertionResultsMaxOrderByAggregateInput {
+  actual: SortOrder
+  assertionId: SortOrder
+  createdAt: SortOrder
+  id: SortOrder
+  pass: SortOrder
+  responseId: SortOrder
+}
+
+type AssertionResultsMinAggregate {
+  actual: String
+  assertionId: Int
+  createdAt: DateTime
+  id: Int
+  pass: Boolean
+  responseId: Int
+}
+
+input AssertionResultsMinOrderByAggregateInput {
+  actual: SortOrder
+  assertionId: SortOrder
+  createdAt: SortOrder
+  id: SortOrder
+  pass: SortOrder
+  responseId: SortOrder
+}
+
+input AssertionResultsOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input AssertionResultsOrderByWithAggregationInput {
+  _avg: AssertionResultsAvgOrderByAggregateInput
+  _count: AssertionResultsCountOrderByAggregateInput
+  _max: AssertionResultsMaxOrderByAggregateInput
+  _min: AssertionResultsMinOrderByAggregateInput
+  _sum: AssertionResultsSumOrderByAggregateInput
+  actual: SortOrder
+  assertionId: SortOrder
+  createdAt: SortOrder
+  id: SortOrder
+  pass: SortOrder
+  responseId: SortOrder
+}
+
+input AssertionResultsOrderByWithRelationInput {
+  actual: SortOrder
+  assertion: AssertionOrderByWithRelationInput
+  assertionId: SortOrder
+  createdAt: SortOrder
+  id: SortOrder
+  pass: SortOrder
+  response: ResponseOrderByWithRelationInput
+  responseId: SortOrder
+}
+
+enum AssertionResultsScalarFieldEnum {
+  actual
+  assertionId
+  createdAt
+  id
+  pass
+  responseId
+}
+
+input AssertionResultsScalarWhereInput {
+  AND: [AssertionResultsScalarWhereInput!]
+  NOT: [AssertionResultsScalarWhereInput!]
+  OR: [AssertionResultsScalarWhereInput!]
+  actual: StringFilter
+  assertionId: IntFilter
+  createdAt: DateTimeFilter
+  id: IntFilter
+  pass: BoolFilter
+  responseId: IntFilter
+}
+
+input AssertionResultsScalarWhereWithAggregatesInput {
+  AND: [AssertionResultsScalarWhereWithAggregatesInput!]
+  NOT: [AssertionResultsScalarWhereWithAggregatesInput!]
+  OR: [AssertionResultsScalarWhereWithAggregatesInput!]
+  actual: StringWithAggregatesFilter
+  assertionId: IntWithAggregatesFilter
+  createdAt: DateTimeWithAggregatesFilter
+  id: IntWithAggregatesFilter
+  pass: BoolWithAggregatesFilter
+  responseId: IntWithAggregatesFilter
+}
+
+type AssertionResultsSumAggregate {
+  assertionId: Int
+  id: Int
+  responseId: Int
+}
+
+input AssertionResultsSumOrderByAggregateInput {
+  assertionId: SortOrder
+  id: SortOrder
+  responseId: SortOrder
+}
+
+input AssertionResultsUpdateInput {
+  actual: StringFieldUpdateOperationsInput
+  assertion: AssertionUpdateOneRequiredWithoutAssertionResultsNestedInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  pass: BoolFieldUpdateOperationsInput
+  response: ResponseUpdateOneRequiredWithoutAssertionResultsNestedInput
+}
+
+input AssertionResultsUpdateManyMutationInput {
+  actual: StringFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  pass: BoolFieldUpdateOperationsInput
+}
+
+input AssertionResultsUpdateManyWithWhereWithoutAssertionInput {
+  data: AssertionResultsUpdateManyMutationInput!
+  where: AssertionResultsScalarWhereInput!
+}
+
+input AssertionResultsUpdateManyWithWhereWithoutResponseInput {
+  data: AssertionResultsUpdateManyMutationInput!
+  where: AssertionResultsScalarWhereInput!
+}
+
+input AssertionResultsUpdateManyWithoutAssertionNestedInput {
+  connect: [AssertionResultsWhereUniqueInput!]
+  connectOrCreate: [AssertionResultsCreateOrConnectWithoutAssertionInput!]
+  create: [AssertionResultsCreateWithoutAssertionInput!]
+  createMany: AssertionResultsCreateManyAssertionInputEnvelope
+  delete: [AssertionResultsWhereUniqueInput!]
+  deleteMany: [AssertionResultsScalarWhereInput!]
+  disconnect: [AssertionResultsWhereUniqueInput!]
+  set: [AssertionResultsWhereUniqueInput!]
+  update: [AssertionResultsUpdateWithWhereUniqueWithoutAssertionInput!]
+  updateMany: [AssertionResultsUpdateManyWithWhereWithoutAssertionInput!]
+  upsert: [AssertionResultsUpsertWithWhereUniqueWithoutAssertionInput!]
+}
+
+input AssertionResultsUpdateManyWithoutResponseNestedInput {
+  connect: [AssertionResultsWhereUniqueInput!]
+  connectOrCreate: [AssertionResultsCreateOrConnectWithoutResponseInput!]
+  create: [AssertionResultsCreateWithoutResponseInput!]
+  createMany: AssertionResultsCreateManyResponseInputEnvelope
+  delete: [AssertionResultsWhereUniqueInput!]
+  deleteMany: [AssertionResultsScalarWhereInput!]
+  disconnect: [AssertionResultsWhereUniqueInput!]
+  set: [AssertionResultsWhereUniqueInput!]
+  update: [AssertionResultsUpdateWithWhereUniqueWithoutResponseInput!]
+  updateMany: [AssertionResultsUpdateManyWithWhereWithoutResponseInput!]
+  upsert: [AssertionResultsUpsertWithWhereUniqueWithoutResponseInput!]
+}
+
+input AssertionResultsUpdateWithWhereUniqueWithoutAssertionInput {
+  data: AssertionResultsUpdateWithoutAssertionInput!
+  where: AssertionResultsWhereUniqueInput!
+}
+
+input AssertionResultsUpdateWithWhereUniqueWithoutResponseInput {
+  data: AssertionResultsUpdateWithoutResponseInput!
+  where: AssertionResultsWhereUniqueInput!
+}
+
+input AssertionResultsUpdateWithoutAssertionInput {
+  actual: StringFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  pass: BoolFieldUpdateOperationsInput
+  response: ResponseUpdateOneRequiredWithoutAssertionResultsNestedInput
+}
+
+input AssertionResultsUpdateWithoutResponseInput {
+  actual: StringFieldUpdateOperationsInput
+  assertion: AssertionUpdateOneRequiredWithoutAssertionResultsNestedInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  pass: BoolFieldUpdateOperationsInput
+}
+
+input AssertionResultsUpsertWithWhereUniqueWithoutAssertionInput {
+  create: AssertionResultsCreateWithoutAssertionInput!
+  update: AssertionResultsUpdateWithoutAssertionInput!
+  where: AssertionResultsWhereUniqueInput!
+}
+
+input AssertionResultsUpsertWithWhereUniqueWithoutResponseInput {
+  create: AssertionResultsCreateWithoutResponseInput!
+  update: AssertionResultsUpdateWithoutResponseInput!
+  where: AssertionResultsWhereUniqueInput!
+}
+
+input AssertionResultsWhereInput {
+  AND: [AssertionResultsWhereInput!]
+  NOT: [AssertionResultsWhereInput!]
+  OR: [AssertionResultsWhereInput!]
+  actual: StringFilter
+  assertion: AssertionRelationFilter
+  assertionId: IntFilter
+  createdAt: DateTimeFilter
+  id: IntFilter
+  pass: BoolFilter
+  response: ResponseRelationFilter
+  responseId: IntFilter
+}
+
+input AssertionResultsWhereUniqueInput {
+  id: Int
 }
 
 enum AssertionScalarFieldEnum {
@@ -246,6 +645,7 @@ input AssertionSumOrderByAggregateInput {
 }
 
 input AssertionUpdateInput {
+  AssertionResults: AssertionResultsUpdateManyWithoutAssertionNestedInput
   createdAt: DateTimeFieldUpdateOperationsInput
   expected: StringFieldUpdateOperationsInput
   property: StringFieldUpdateOperationsInput
@@ -277,12 +677,28 @@ input AssertionUpdateManyWithoutRequestNestedInput {
   upsert: [AssertionUpsertWithWhereUniqueWithoutRequestInput!]
 }
 
+input AssertionUpdateOneRequiredWithoutAssertionResultsNestedInput {
+  connect: AssertionWhereUniqueInput
+  connectOrCreate: AssertionCreateOrConnectWithoutAssertionResultsInput
+  create: AssertionCreateWithoutAssertionResultsInput
+  update: AssertionUpdateWithoutAssertionResultsInput
+  upsert: AssertionUpsertWithoutAssertionResultsInput
+}
+
 input AssertionUpdateWithWhereUniqueWithoutRequestInput {
   data: AssertionUpdateWithoutRequestInput!
   where: AssertionWhereUniqueInput!
 }
 
+input AssertionUpdateWithoutAssertionResultsInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  expected: StringFieldUpdateOperationsInput
+  property: StringFieldUpdateOperationsInput
+  request: RequestUpdateOneRequiredWithoutAssertionsNestedInput
+}
+
 input AssertionUpdateWithoutRequestInput {
+  AssertionResults: AssertionResultsUpdateManyWithoutAssertionNestedInput
   createdAt: DateTimeFieldUpdateOperationsInput
   expected: StringFieldUpdateOperationsInput
   property: StringFieldUpdateOperationsInput
@@ -294,8 +710,14 @@ input AssertionUpsertWithWhereUniqueWithoutRequestInput {
   where: AssertionWhereUniqueInput!
 }
 
+input AssertionUpsertWithoutAssertionResultsInput {
+  create: AssertionCreateWithoutAssertionResultsInput!
+  update: AssertionUpdateWithoutAssertionResultsInput!
+}
+
 input AssertionWhereInput {
   AND: [AssertionWhereInput!]
+  AssertionResults: AssertionResultsListRelationFilter
   NOT: [AssertionWhereInput!]
   OR: [AssertionWhereInput!]
   createdAt: DateTimeFilter
@@ -308,6 +730,23 @@ input AssertionWhereInput {
 
 input AssertionWhereUniqueInput {
   id: Int
+}
+
+input BoolFieldUpdateOperationsInput {
+  set: Boolean
+}
+
+input BoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
+}
+
+input BoolWithAggregatesFilter {
+  _count: NestedIntFilter
+  _max: NestedBoolFilter
+  _min: NestedBoolFilter
+  equals: Boolean
+  not: NestedBoolWithAggregatesFilter
 }
 
 type Collection {
@@ -948,40 +1387,60 @@ input MonitorWhereUniqueInput {
 
 type Mutation {
   createManyAssertion(data: [AssertionCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
+  createManyAssertionResults(data: [AssertionResultsCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
   createManyCollection(data: [CollectionCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
   createManyMonitor(data: [MonitorCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
   createManyRequest(data: [RequestCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
   createManyResponse(data: [ResponseCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
   createOneAssertion(data: AssertionCreateInput!): Assertion!
+  createOneAssertionResults(data: AssertionResultsCreateInput!): AssertionResults!
   createOneCollection(data: CollectionCreateInput!): Collection!
   createOneMonitor(data: MonitorCreateInput!): Monitor!
   createOneRequest(data: RequestCreateInput!): Request!
   createOneResponse(data: ResponseCreateInput!): Response!
   deleteManyAssertion(where: AssertionWhereInput): AffectedRowsOutput!
+  deleteManyAssertionResults(where: AssertionResultsWhereInput): AffectedRowsOutput!
   deleteManyCollection(where: CollectionWhereInput): AffectedRowsOutput!
   deleteManyMonitor(where: MonitorWhereInput): AffectedRowsOutput!
   deleteManyRequest(where: RequestWhereInput): AffectedRowsOutput!
   deleteManyResponse(where: ResponseWhereInput): AffectedRowsOutput!
   deleteOneAssertion(where: AssertionWhereUniqueInput!): Assertion
+  deleteOneAssertionResults(where: AssertionResultsWhereUniqueInput!): AssertionResults
   deleteOneCollection(where: CollectionWhereUniqueInput!): Collection
   deleteOneMonitor(where: MonitorWhereUniqueInput!): Monitor
   deleteOneRequest(where: RequestWhereUniqueInput!): Request
   deleteOneResponse(where: ResponseWhereUniqueInput!): Response
   updateManyAssertion(data: AssertionUpdateManyMutationInput!, where: AssertionWhereInput): AffectedRowsOutput!
+  updateManyAssertionResults(data: AssertionResultsUpdateManyMutationInput!, where: AssertionResultsWhereInput): AffectedRowsOutput!
   updateManyCollection(data: CollectionUpdateManyMutationInput!, where: CollectionWhereInput): AffectedRowsOutput!
   updateManyMonitor(data: MonitorUpdateManyMutationInput!, where: MonitorWhereInput): AffectedRowsOutput!
   updateManyRequest(data: RequestUpdateManyMutationInput!, where: RequestWhereInput): AffectedRowsOutput!
   updateManyResponse(data: ResponseUpdateManyMutationInput!, where: ResponseWhereInput): AffectedRowsOutput!
   updateOneAssertion(data: AssertionUpdateInput!, where: AssertionWhereUniqueInput!): Assertion
+  updateOneAssertionResults(data: AssertionResultsUpdateInput!, where: AssertionResultsWhereUniqueInput!): AssertionResults
   updateOneCollection(data: CollectionUpdateInput!, where: CollectionWhereUniqueInput!): Collection
   updateOneMonitor(data: MonitorUpdateInput!, where: MonitorWhereUniqueInput!): Monitor
   updateOneRequest(data: RequestUpdateInput!, where: RequestWhereUniqueInput!): Request
   updateOneResponse(data: ResponseUpdateInput!, where: ResponseWhereUniqueInput!): Response
   upsertOneAssertion(create: AssertionCreateInput!, update: AssertionUpdateInput!, where: AssertionWhereUniqueInput!): Assertion!
+  upsertOneAssertionResults(create: AssertionResultsCreateInput!, update: AssertionResultsUpdateInput!, where: AssertionResultsWhereUniqueInput!): AssertionResults!
   upsertOneCollection(create: CollectionCreateInput!, update: CollectionUpdateInput!, where: CollectionWhereUniqueInput!): Collection!
   upsertOneMonitor(create: MonitorCreateInput!, update: MonitorUpdateInput!, where: MonitorWhereUniqueInput!): Monitor!
   upsertOneRequest(create: RequestCreateInput!, update: RequestUpdateInput!, where: RequestWhereUniqueInput!): Request!
   upsertOneResponse(create: ResponseCreateInput!, update: ResponseUpdateInput!, where: ResponseWhereUniqueInput!): Response!
+}
+
+input NestedBoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
+}
+
+input NestedBoolWithAggregatesFilter {
+  _count: NestedIntFilter
+  _max: NestedBoolFilter
+  _min: NestedBoolFilter
+  equals: Boolean
+  not: NestedBoolWithAggregatesFilter
 }
 
 input NestedDateTimeFilter {
@@ -1123,6 +1582,7 @@ input NestedStringWithAggregatesFilter {
 
 type Query {
   aggregateAssertion(cursor: AssertionWhereUniqueInput, orderBy: [AssertionOrderByWithRelationInput!], skip: Int, take: Int, where: AssertionWhereInput): AggregateAssertion!
+  aggregateAssertionResults(cursor: AssertionResultsWhereUniqueInput, orderBy: [AssertionResultsOrderByWithRelationInput!], skip: Int, take: Int, where: AssertionResultsWhereInput): AggregateAssertionResults!
   aggregateCollection(cursor: CollectionWhereUniqueInput, orderBy: [CollectionOrderByWithRelationInput!], skip: Int, take: Int, where: CollectionWhereInput): AggregateCollection!
   aggregateMonitor(cursor: MonitorWhereUniqueInput, orderBy: [MonitorOrderByWithRelationInput!], skip: Int, take: Int, where: MonitorWhereInput): AggregateMonitor!
   aggregateRequest(cursor: RequestWhereUniqueInput, orderBy: [RequestOrderByWithRelationInput!], skip: Int, take: Int, where: RequestWhereInput): AggregateRequest!
@@ -1132,11 +1592,15 @@ type Query {
   collection(where: CollectionWhereUniqueInput!): Collection
   collections(cursor: CollectionWhereUniqueInput, distinct: [CollectionScalarFieldEnum!], orderBy: [CollectionOrderByWithRelationInput!], skip: Int, take: Int, where: CollectionWhereInput): [Collection!]!
   findFirstAssertion(cursor: AssertionWhereUniqueInput, distinct: [AssertionScalarFieldEnum!], orderBy: [AssertionOrderByWithRelationInput!], skip: Int, take: Int, where: AssertionWhereInput): Assertion
+  findFirstAssertionResults(cursor: AssertionResultsWhereUniqueInput, distinct: [AssertionResultsScalarFieldEnum!], orderBy: [AssertionResultsOrderByWithRelationInput!], skip: Int, take: Int, where: AssertionResultsWhereInput): AssertionResults
   findFirstCollection(cursor: CollectionWhereUniqueInput, distinct: [CollectionScalarFieldEnum!], orderBy: [CollectionOrderByWithRelationInput!], skip: Int, take: Int, where: CollectionWhereInput): Collection
   findFirstMonitor(cursor: MonitorWhereUniqueInput, distinct: [MonitorScalarFieldEnum!], orderBy: [MonitorOrderByWithRelationInput!], skip: Int, take: Int, where: MonitorWhereInput): Monitor
   findFirstRequest(cursor: RequestWhereUniqueInput, distinct: [RequestScalarFieldEnum!], orderBy: [RequestOrderByWithRelationInput!], skip: Int, take: Int, where: RequestWhereInput): Request
   findFirstResponse(cursor: ResponseWhereUniqueInput, distinct: [ResponseScalarFieldEnum!], orderBy: [ResponseOrderByWithRelationInput!], skip: Int, take: Int, where: ResponseWhereInput): Response
+  findManyAssertionResults(cursor: AssertionResultsWhereUniqueInput, distinct: [AssertionResultsScalarFieldEnum!], orderBy: [AssertionResultsOrderByWithRelationInput!], skip: Int, take: Int, where: AssertionResultsWhereInput): [AssertionResults!]!
+  findUniqueAssertionResults(where: AssertionResultsWhereUniqueInput!): AssertionResults
   groupByAssertion(by: [AssertionScalarFieldEnum!]!, having: AssertionScalarWhereWithAggregatesInput, orderBy: [AssertionOrderByWithAggregationInput!], skip: Int, take: Int, where: AssertionWhereInput): [AssertionGroupBy!]!
+  groupByAssertionResults(by: [AssertionResultsScalarFieldEnum!]!, having: AssertionResultsScalarWhereWithAggregatesInput, orderBy: [AssertionResultsOrderByWithAggregationInput!], skip: Int, take: Int, where: AssertionResultsWhereInput): [AssertionResultsGroupBy!]!
   groupByCollection(by: [CollectionScalarFieldEnum!]!, having: CollectionScalarWhereWithAggregatesInput, orderBy: [CollectionOrderByWithAggregationInput!], skip: Int, take: Int, where: CollectionWhereInput): [CollectionGroupBy!]!
   groupByMonitor(by: [MonitorScalarFieldEnum!]!, having: MonitorScalarWhereWithAggregatesInput, orderBy: [MonitorOrderByWithAggregationInput!], skip: Int, take: Int, where: MonitorWhereInput): [MonitorGroupBy!]!
   groupByRequest(by: [RequestScalarFieldEnum!]!, having: RequestScalarWhereWithAggregatesInput, orderBy: [RequestOrderByWithAggregationInput!], skip: Int, take: Int, where: RequestWhereInput): [RequestGroupBy!]!
@@ -1619,6 +2083,8 @@ input RequestWhereUniqueInput {
 }
 
 type Response {
+  AssertionResults(cursor: AssertionResultsWhereUniqueInput, distinct: [AssertionResultsScalarFieldEnum!], orderBy: [AssertionResultsOrderByWithRelationInput!], skip: Int, take: Int, where: AssertionResultsWhereInput): [AssertionResults!]!
+  _count: ResponseCount
   createdAt: DateTime!
   headers: JSON!
   id: Int!
@@ -1642,6 +2108,10 @@ input ResponseAvgOrderByAggregateInput {
   status: SortOrder
 }
 
+type ResponseCount {
+  AssertionResults: Int!
+}
+
 type ResponseCountAggregate {
   _all: Int!
   createdAt: Int!
@@ -1662,6 +2132,7 @@ input ResponseCountOrderByAggregateInput {
 }
 
 input ResponseCreateInput {
+  AssertionResults: AssertionResultsCreateNestedManyWithoutResponseInput
   createdAt: DateTime
   headers: JSON!
   latency: Int!
@@ -1698,12 +2169,32 @@ input ResponseCreateNestedManyWithoutRequestInput {
   createMany: ResponseCreateManyRequestInputEnvelope
 }
 
+input ResponseCreateNestedOneWithoutAssertionResultsInput {
+  connect: ResponseWhereUniqueInput
+  connectOrCreate: ResponseCreateOrConnectWithoutAssertionResultsInput
+  create: ResponseCreateWithoutAssertionResultsInput
+}
+
+input ResponseCreateOrConnectWithoutAssertionResultsInput {
+  create: ResponseCreateWithoutAssertionResultsInput!
+  where: ResponseWhereUniqueInput!
+}
+
 input ResponseCreateOrConnectWithoutRequestInput {
   create: ResponseCreateWithoutRequestInput!
   where: ResponseWhereUniqueInput!
 }
 
+input ResponseCreateWithoutAssertionResultsInput {
+  createdAt: DateTime
+  headers: JSON!
+  latency: Int!
+  request: RequestCreateNestedOneWithoutResponsesInput!
+  status: Int!
+}
+
 input ResponseCreateWithoutRequestInput {
+  AssertionResults: AssertionResultsCreateNestedManyWithoutResponseInput
   createdAt: DateTime
   headers: JSON!
   latency: Int!
@@ -1781,6 +2272,7 @@ input ResponseOrderByWithAggregationInput {
 }
 
 input ResponseOrderByWithRelationInput {
+  AssertionResults: AssertionResultsOrderByRelationAggregateInput
   createdAt: SortOrder
   headers: SortOrder
   id: SortOrder
@@ -1788,6 +2280,11 @@ input ResponseOrderByWithRelationInput {
   request: RequestOrderByWithRelationInput
   requestId: SortOrder
   status: SortOrder
+}
+
+input ResponseRelationFilter {
+  is: ResponseWhereInput
+  isNot: ResponseWhereInput
 }
 
 enum ResponseScalarFieldEnum {
@@ -1838,6 +2335,7 @@ input ResponseSumOrderByAggregateInput {
 }
 
 input ResponseUpdateInput {
+  AssertionResults: AssertionResultsUpdateManyWithoutResponseNestedInput
   createdAt: DateTimeFieldUpdateOperationsInput
   headers: JSON
   latency: IntFieldUpdateOperationsInput
@@ -1871,12 +2369,29 @@ input ResponseUpdateManyWithoutRequestNestedInput {
   upsert: [ResponseUpsertWithWhereUniqueWithoutRequestInput!]
 }
 
+input ResponseUpdateOneRequiredWithoutAssertionResultsNestedInput {
+  connect: ResponseWhereUniqueInput
+  connectOrCreate: ResponseCreateOrConnectWithoutAssertionResultsInput
+  create: ResponseCreateWithoutAssertionResultsInput
+  update: ResponseUpdateWithoutAssertionResultsInput
+  upsert: ResponseUpsertWithoutAssertionResultsInput
+}
+
 input ResponseUpdateWithWhereUniqueWithoutRequestInput {
   data: ResponseUpdateWithoutRequestInput!
   where: ResponseWhereUniqueInput!
 }
 
+input ResponseUpdateWithoutAssertionResultsInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  headers: JSON
+  latency: IntFieldUpdateOperationsInput
+  request: RequestUpdateOneRequiredWithoutResponsesNestedInput
+  status: IntFieldUpdateOperationsInput
+}
+
 input ResponseUpdateWithoutRequestInput {
+  AssertionResults: AssertionResultsUpdateManyWithoutResponseNestedInput
   createdAt: DateTimeFieldUpdateOperationsInput
   headers: JSON
   latency: IntFieldUpdateOperationsInput
@@ -1889,8 +2404,14 @@ input ResponseUpsertWithWhereUniqueWithoutRequestInput {
   where: ResponseWhereUniqueInput!
 }
 
+input ResponseUpsertWithoutAssertionResultsInput {
+  create: ResponseCreateWithoutAssertionResultsInput!
+  update: ResponseUpdateWithoutAssertionResultsInput!
+}
+
 input ResponseWhereInput {
   AND: [ResponseWhereInput!]
+  AssertionResults: AssertionResultsListRelationFilter
   NOT: [ResponseWhereInput!]
   OR: [ResponseWhereInput!]
   createdAt: DateTimeFilter

@@ -51,6 +51,7 @@ model Response {
   id               Int                @id @default(autoincrement())
   status           Int
   headers          Json
+  body             Json?
   latency          Int
   requestId        Int
   request          Request            @relation(fields: [requestId], references: [id])
