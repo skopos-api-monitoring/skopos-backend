@@ -23,14 +23,6 @@ type AggregateCollection {
   _sum: CollectionSumAggregate
 }
 
-type AggregateCollectionRun {
-  _avg: CollectionRunAvgAggregate
-  _count: CollectionRunCountAggregate
-  _max: CollectionRunMaxAggregate
-  _min: CollectionRunMinAggregate
-  _sum: CollectionRunSumAggregate
-}
-
 type AggregateMonitor {
   _avg: MonitorAvgAggregate
   _count: MonitorCountAggregate
@@ -56,7 +48,6 @@ type AggregateResponse {
 }
 
 type Assertion {
-  actual: String
   createdAt: DateTime!
   expected: String!
   id: Int!
@@ -77,7 +68,6 @@ input AssertionAvgOrderByAggregateInput {
 
 type AssertionCountAggregate {
   _all: Int!
-  actual: Int!
   createdAt: Int!
   expected: Int!
   id: Int!
@@ -86,7 +76,6 @@ type AssertionCountAggregate {
 }
 
 input AssertionCountOrderByAggregateInput {
-  actual: SortOrder
   createdAt: SortOrder
   expected: SortOrder
   id: SortOrder
@@ -95,7 +84,6 @@ input AssertionCountOrderByAggregateInput {
 }
 
 input AssertionCreateInput {
-  actual: String
   createdAt: DateTime
   expected: String!
   property: String!
@@ -103,7 +91,6 @@ input AssertionCreateInput {
 }
 
 input AssertionCreateManyInput {
-  actual: String
   createdAt: DateTime
   expected: String!
   id: Int
@@ -112,7 +99,6 @@ input AssertionCreateManyInput {
 }
 
 input AssertionCreateManyRequestInput {
-  actual: String
   createdAt: DateTime
   expected: String!
   id: Int
@@ -137,7 +123,6 @@ input AssertionCreateOrConnectWithoutRequestInput {
 }
 
 input AssertionCreateWithoutRequestInput {
-  actual: String
   createdAt: DateTime
   expected: String!
   property: String!
@@ -149,7 +134,6 @@ type AssertionGroupBy {
   _max: AssertionMaxAggregate
   _min: AssertionMinAggregate
   _sum: AssertionSumAggregate
-  actual: String
   createdAt: DateTime!
   expected: String!
   id: Int!
@@ -164,7 +148,6 @@ input AssertionListRelationFilter {
 }
 
 type AssertionMaxAggregate {
-  actual: String
   createdAt: DateTime
   expected: String
   id: Int
@@ -173,7 +156,6 @@ type AssertionMaxAggregate {
 }
 
 input AssertionMaxOrderByAggregateInput {
-  actual: SortOrder
   createdAt: SortOrder
   expected: SortOrder
   id: SortOrder
@@ -182,7 +164,6 @@ input AssertionMaxOrderByAggregateInput {
 }
 
 type AssertionMinAggregate {
-  actual: String
   createdAt: DateTime
   expected: String
   id: Int
@@ -191,7 +172,6 @@ type AssertionMinAggregate {
 }
 
 input AssertionMinOrderByAggregateInput {
-  actual: SortOrder
   createdAt: SortOrder
   expected: SortOrder
   id: SortOrder
@@ -209,7 +189,6 @@ input AssertionOrderByWithAggregationInput {
   _max: AssertionMaxOrderByAggregateInput
   _min: AssertionMinOrderByAggregateInput
   _sum: AssertionSumOrderByAggregateInput
-  actual: SortOrder
   createdAt: SortOrder
   expected: SortOrder
   id: SortOrder
@@ -218,7 +197,6 @@ input AssertionOrderByWithAggregationInput {
 }
 
 input AssertionOrderByWithRelationInput {
-  actual: SortOrder
   createdAt: SortOrder
   expected: SortOrder
   id: SortOrder
@@ -228,7 +206,6 @@ input AssertionOrderByWithRelationInput {
 }
 
 enum AssertionScalarFieldEnum {
-  actual
   createdAt
   expected
   id
@@ -240,7 +217,6 @@ input AssertionScalarWhereInput {
   AND: [AssertionScalarWhereInput!]
   NOT: [AssertionScalarWhereInput!]
   OR: [AssertionScalarWhereInput!]
-  actual: StringNullableFilter
   createdAt: DateTimeFilter
   expected: StringFilter
   id: IntFilter
@@ -252,7 +228,6 @@ input AssertionScalarWhereWithAggregatesInput {
   AND: [AssertionScalarWhereWithAggregatesInput!]
   NOT: [AssertionScalarWhereWithAggregatesInput!]
   OR: [AssertionScalarWhereWithAggregatesInput!]
-  actual: StringNullableWithAggregatesFilter
   createdAt: DateTimeWithAggregatesFilter
   expected: StringWithAggregatesFilter
   id: IntWithAggregatesFilter
@@ -271,7 +246,6 @@ input AssertionSumOrderByAggregateInput {
 }
 
 input AssertionUpdateInput {
-  actual: NullableStringFieldUpdateOperationsInput
   createdAt: DateTimeFieldUpdateOperationsInput
   expected: StringFieldUpdateOperationsInput
   property: StringFieldUpdateOperationsInput
@@ -279,7 +253,6 @@ input AssertionUpdateInput {
 }
 
 input AssertionUpdateManyMutationInput {
-  actual: NullableStringFieldUpdateOperationsInput
   createdAt: DateTimeFieldUpdateOperationsInput
   expected: StringFieldUpdateOperationsInput
   property: StringFieldUpdateOperationsInput
@@ -310,7 +283,6 @@ input AssertionUpdateWithWhereUniqueWithoutRequestInput {
 }
 
 input AssertionUpdateWithoutRequestInput {
-  actual: NullableStringFieldUpdateOperationsInput
   createdAt: DateTimeFieldUpdateOperationsInput
   expected: StringFieldUpdateOperationsInput
   property: StringFieldUpdateOperationsInput
@@ -326,7 +298,6 @@ input AssertionWhereInput {
   AND: [AssertionWhereInput!]
   NOT: [AssertionWhereInput!]
   OR: [AssertionWhereInput!]
-  actual: StringNullableFilter
   createdAt: DateTimeFilter
   expected: StringFilter
   id: IntFilter
@@ -340,7 +311,6 @@ input AssertionWhereUniqueInput {
 }
 
 type Collection {
-  CollectionRun(cursor: CollectionRunWhereUniqueInput, distinct: [CollectionRunScalarFieldEnum!], orderBy: [CollectionRunOrderByWithRelationInput!], skip: Int, take: Int, where: CollectionRunWhereInput): [CollectionRun!]!
   Monitor(cursor: MonitorWhereUniqueInput, distinct: [MonitorScalarFieldEnum!], orderBy: [MonitorOrderByWithRelationInput!], skip: Int, take: Int, where: MonitorWhereInput): [Monitor!]!
   _count: CollectionCount
   createdAt: DateTime!
@@ -358,7 +328,6 @@ input CollectionAvgOrderByAggregateInput {
 }
 
 type CollectionCount {
-  CollectionRun: Int!
   Monitor: Int!
   requests: Int!
 }
@@ -377,7 +346,6 @@ input CollectionCountOrderByAggregateInput {
 }
 
 input CollectionCreateInput {
-  CollectionRun: CollectionRunCreateNestedManyWithoutCollectionInput
   Monitor: MonitorCreateNestedManyWithoutCollectionInput
   createdAt: DateTime
   requests: RequestCreateNestedManyWithoutCollectionInput
@@ -388,12 +356,6 @@ input CollectionCreateManyInput {
   createdAt: DateTime
   id: Int
   title: String!
-}
-
-input CollectionCreateNestedOneWithoutCollectionRunInput {
-  connect: CollectionWhereUniqueInput
-  connectOrCreate: CollectionCreateOrConnectWithoutCollectionRunInput
-  create: CollectionCreateWithoutCollectionRunInput
 }
 
 input CollectionCreateNestedOneWithoutMonitorInput {
@@ -408,11 +370,6 @@ input CollectionCreateNestedOneWithoutRequestsInput {
   create: CollectionCreateWithoutRequestsInput
 }
 
-input CollectionCreateOrConnectWithoutCollectionRunInput {
-  create: CollectionCreateWithoutCollectionRunInput!
-  where: CollectionWhereUniqueInput!
-}
-
 input CollectionCreateOrConnectWithoutMonitorInput {
   create: CollectionCreateWithoutMonitorInput!
   where: CollectionWhereUniqueInput!
@@ -423,22 +380,13 @@ input CollectionCreateOrConnectWithoutRequestsInput {
   where: CollectionWhereUniqueInput!
 }
 
-input CollectionCreateWithoutCollectionRunInput {
-  Monitor: MonitorCreateNestedManyWithoutCollectionInput
-  createdAt: DateTime
-  requests: RequestCreateNestedManyWithoutCollectionInput
-  title: String!
-}
-
 input CollectionCreateWithoutMonitorInput {
-  CollectionRun: CollectionRunCreateNestedManyWithoutCollectionInput
   createdAt: DateTime
   requests: RequestCreateNestedManyWithoutCollectionInput
   title: String!
 }
 
 input CollectionCreateWithoutRequestsInput {
-  CollectionRun: CollectionRunCreateNestedManyWithoutCollectionInput
   Monitor: MonitorCreateNestedManyWithoutCollectionInput
   createdAt: DateTime
   title: String!
@@ -491,7 +439,6 @@ input CollectionOrderByWithAggregationInput {
 }
 
 input CollectionOrderByWithRelationInput {
-  CollectionRun: CollectionRunOrderByRelationAggregateInput
   Monitor: MonitorOrderByRelationAggregateInput
   createdAt: SortOrder
   id: SortOrder
@@ -502,365 +449,6 @@ input CollectionOrderByWithRelationInput {
 input CollectionRelationFilter {
   is: CollectionWhereInput
   isNot: CollectionWhereInput
-}
-
-type CollectionRun {
-  collection: Collection!
-  collectionId: Int!
-  createdAt: DateTime!
-  finishedAt: DateTime!
-  id: Int!
-  monitor: Monitor!
-  monitorId: Int!
-  startedAt: DateTime!
-}
-
-type CollectionRunAvgAggregate {
-  collectionId: Float
-  id: Float
-  monitorId: Float
-}
-
-input CollectionRunAvgOrderByAggregateInput {
-  collectionId: SortOrder
-  id: SortOrder
-  monitorId: SortOrder
-}
-
-type CollectionRunCountAggregate {
-  _all: Int!
-  collectionId: Int!
-  createdAt: Int!
-  finishedAt: Int!
-  id: Int!
-  monitorId: Int!
-  startedAt: Int!
-}
-
-input CollectionRunCountOrderByAggregateInput {
-  collectionId: SortOrder
-  createdAt: SortOrder
-  finishedAt: SortOrder
-  id: SortOrder
-  monitorId: SortOrder
-  startedAt: SortOrder
-}
-
-input CollectionRunCreateInput {
-  collection: CollectionCreateNestedOneWithoutCollectionRunInput!
-  createdAt: DateTime
-  finishedAt: DateTime!
-  monitor: MonitorCreateNestedOneWithoutCollectionRunsInput!
-  startedAt: DateTime!
-}
-
-input CollectionRunCreateManyCollectionInput {
-  createdAt: DateTime
-  finishedAt: DateTime!
-  id: Int
-  monitorId: Int!
-  startedAt: DateTime!
-}
-
-input CollectionRunCreateManyCollectionInputEnvelope {
-  data: [CollectionRunCreateManyCollectionInput!]!
-  skipDuplicates: Boolean
-}
-
-input CollectionRunCreateManyInput {
-  collectionId: Int!
-  createdAt: DateTime
-  finishedAt: DateTime!
-  id: Int
-  monitorId: Int!
-  startedAt: DateTime!
-}
-
-input CollectionRunCreateManyMonitorInput {
-  collectionId: Int!
-  createdAt: DateTime
-  finishedAt: DateTime!
-  id: Int
-  startedAt: DateTime!
-}
-
-input CollectionRunCreateManyMonitorInputEnvelope {
-  data: [CollectionRunCreateManyMonitorInput!]!
-  skipDuplicates: Boolean
-}
-
-input CollectionRunCreateNestedManyWithoutCollectionInput {
-  connect: [CollectionRunWhereUniqueInput!]
-  connectOrCreate: [CollectionRunCreateOrConnectWithoutCollectionInput!]
-  create: [CollectionRunCreateWithoutCollectionInput!]
-  createMany: CollectionRunCreateManyCollectionInputEnvelope
-}
-
-input CollectionRunCreateNestedManyWithoutMonitorInput {
-  connect: [CollectionRunWhereUniqueInput!]
-  connectOrCreate: [CollectionRunCreateOrConnectWithoutMonitorInput!]
-  create: [CollectionRunCreateWithoutMonitorInput!]
-  createMany: CollectionRunCreateManyMonitorInputEnvelope
-}
-
-input CollectionRunCreateOrConnectWithoutCollectionInput {
-  create: CollectionRunCreateWithoutCollectionInput!
-  where: CollectionRunWhereUniqueInput!
-}
-
-input CollectionRunCreateOrConnectWithoutMonitorInput {
-  create: CollectionRunCreateWithoutMonitorInput!
-  where: CollectionRunWhereUniqueInput!
-}
-
-input CollectionRunCreateWithoutCollectionInput {
-  createdAt: DateTime
-  finishedAt: DateTime!
-  monitor: MonitorCreateNestedOneWithoutCollectionRunsInput!
-  startedAt: DateTime!
-}
-
-input CollectionRunCreateWithoutMonitorInput {
-  collection: CollectionCreateNestedOneWithoutCollectionRunInput!
-  createdAt: DateTime
-  finishedAt: DateTime!
-  startedAt: DateTime!
-}
-
-type CollectionRunGroupBy {
-  _avg: CollectionRunAvgAggregate
-  _count: CollectionRunCountAggregate
-  _max: CollectionRunMaxAggregate
-  _min: CollectionRunMinAggregate
-  _sum: CollectionRunSumAggregate
-  collectionId: Int!
-  createdAt: DateTime!
-  finishedAt: DateTime!
-  id: Int!
-  monitorId: Int!
-  startedAt: DateTime!
-}
-
-input CollectionRunListRelationFilter {
-  every: CollectionRunWhereInput
-  none: CollectionRunWhereInput
-  some: CollectionRunWhereInput
-}
-
-type CollectionRunMaxAggregate {
-  collectionId: Int
-  createdAt: DateTime
-  finishedAt: DateTime
-  id: Int
-  monitorId: Int
-  startedAt: DateTime
-}
-
-input CollectionRunMaxOrderByAggregateInput {
-  collectionId: SortOrder
-  createdAt: SortOrder
-  finishedAt: SortOrder
-  id: SortOrder
-  monitorId: SortOrder
-  startedAt: SortOrder
-}
-
-type CollectionRunMinAggregate {
-  collectionId: Int
-  createdAt: DateTime
-  finishedAt: DateTime
-  id: Int
-  monitorId: Int
-  startedAt: DateTime
-}
-
-input CollectionRunMinOrderByAggregateInput {
-  collectionId: SortOrder
-  createdAt: SortOrder
-  finishedAt: SortOrder
-  id: SortOrder
-  monitorId: SortOrder
-  startedAt: SortOrder
-}
-
-input CollectionRunOrderByRelationAggregateInput {
-  _count: SortOrder
-}
-
-input CollectionRunOrderByWithAggregationInput {
-  _avg: CollectionRunAvgOrderByAggregateInput
-  _count: CollectionRunCountOrderByAggregateInput
-  _max: CollectionRunMaxOrderByAggregateInput
-  _min: CollectionRunMinOrderByAggregateInput
-  _sum: CollectionRunSumOrderByAggregateInput
-  collectionId: SortOrder
-  createdAt: SortOrder
-  finishedAt: SortOrder
-  id: SortOrder
-  monitorId: SortOrder
-  startedAt: SortOrder
-}
-
-input CollectionRunOrderByWithRelationInput {
-  collection: CollectionOrderByWithRelationInput
-  collectionId: SortOrder
-  createdAt: SortOrder
-  finishedAt: SortOrder
-  id: SortOrder
-  monitor: MonitorOrderByWithRelationInput
-  monitorId: SortOrder
-  startedAt: SortOrder
-}
-
-enum CollectionRunScalarFieldEnum {
-  collectionId
-  createdAt
-  finishedAt
-  id
-  monitorId
-  startedAt
-}
-
-input CollectionRunScalarWhereInput {
-  AND: [CollectionRunScalarWhereInput!]
-  NOT: [CollectionRunScalarWhereInput!]
-  OR: [CollectionRunScalarWhereInput!]
-  collectionId: IntFilter
-  createdAt: DateTimeFilter
-  finishedAt: DateTimeFilter
-  id: IntFilter
-  monitorId: IntFilter
-  startedAt: DateTimeFilter
-}
-
-input CollectionRunScalarWhereWithAggregatesInput {
-  AND: [CollectionRunScalarWhereWithAggregatesInput!]
-  NOT: [CollectionRunScalarWhereWithAggregatesInput!]
-  OR: [CollectionRunScalarWhereWithAggregatesInput!]
-  collectionId: IntWithAggregatesFilter
-  createdAt: DateTimeWithAggregatesFilter
-  finishedAt: DateTimeWithAggregatesFilter
-  id: IntWithAggregatesFilter
-  monitorId: IntWithAggregatesFilter
-  startedAt: DateTimeWithAggregatesFilter
-}
-
-type CollectionRunSumAggregate {
-  collectionId: Int
-  id: Int
-  monitorId: Int
-}
-
-input CollectionRunSumOrderByAggregateInput {
-  collectionId: SortOrder
-  id: SortOrder
-  monitorId: SortOrder
-}
-
-input CollectionRunUpdateInput {
-  collection: CollectionUpdateOneRequiredWithoutCollectionRunNestedInput
-  createdAt: DateTimeFieldUpdateOperationsInput
-  finishedAt: DateTimeFieldUpdateOperationsInput
-  monitor: MonitorUpdateOneRequiredWithoutCollectionRunsNestedInput
-  startedAt: DateTimeFieldUpdateOperationsInput
-}
-
-input CollectionRunUpdateManyMutationInput {
-  createdAt: DateTimeFieldUpdateOperationsInput
-  finishedAt: DateTimeFieldUpdateOperationsInput
-  startedAt: DateTimeFieldUpdateOperationsInput
-}
-
-input CollectionRunUpdateManyWithWhereWithoutCollectionInput {
-  data: CollectionRunUpdateManyMutationInput!
-  where: CollectionRunScalarWhereInput!
-}
-
-input CollectionRunUpdateManyWithWhereWithoutMonitorInput {
-  data: CollectionRunUpdateManyMutationInput!
-  where: CollectionRunScalarWhereInput!
-}
-
-input CollectionRunUpdateManyWithoutCollectionNestedInput {
-  connect: [CollectionRunWhereUniqueInput!]
-  connectOrCreate: [CollectionRunCreateOrConnectWithoutCollectionInput!]
-  create: [CollectionRunCreateWithoutCollectionInput!]
-  createMany: CollectionRunCreateManyCollectionInputEnvelope
-  delete: [CollectionRunWhereUniqueInput!]
-  deleteMany: [CollectionRunScalarWhereInput!]
-  disconnect: [CollectionRunWhereUniqueInput!]
-  set: [CollectionRunWhereUniqueInput!]
-  update: [CollectionRunUpdateWithWhereUniqueWithoutCollectionInput!]
-  updateMany: [CollectionRunUpdateManyWithWhereWithoutCollectionInput!]
-  upsert: [CollectionRunUpsertWithWhereUniqueWithoutCollectionInput!]
-}
-
-input CollectionRunUpdateManyWithoutMonitorNestedInput {
-  connect: [CollectionRunWhereUniqueInput!]
-  connectOrCreate: [CollectionRunCreateOrConnectWithoutMonitorInput!]
-  create: [CollectionRunCreateWithoutMonitorInput!]
-  createMany: CollectionRunCreateManyMonitorInputEnvelope
-  delete: [CollectionRunWhereUniqueInput!]
-  deleteMany: [CollectionRunScalarWhereInput!]
-  disconnect: [CollectionRunWhereUniqueInput!]
-  set: [CollectionRunWhereUniqueInput!]
-  update: [CollectionRunUpdateWithWhereUniqueWithoutMonitorInput!]
-  updateMany: [CollectionRunUpdateManyWithWhereWithoutMonitorInput!]
-  upsert: [CollectionRunUpsertWithWhereUniqueWithoutMonitorInput!]
-}
-
-input CollectionRunUpdateWithWhereUniqueWithoutCollectionInput {
-  data: CollectionRunUpdateWithoutCollectionInput!
-  where: CollectionRunWhereUniqueInput!
-}
-
-input CollectionRunUpdateWithWhereUniqueWithoutMonitorInput {
-  data: CollectionRunUpdateWithoutMonitorInput!
-  where: CollectionRunWhereUniqueInput!
-}
-
-input CollectionRunUpdateWithoutCollectionInput {
-  createdAt: DateTimeFieldUpdateOperationsInput
-  finishedAt: DateTimeFieldUpdateOperationsInput
-  monitor: MonitorUpdateOneRequiredWithoutCollectionRunsNestedInput
-  startedAt: DateTimeFieldUpdateOperationsInput
-}
-
-input CollectionRunUpdateWithoutMonitorInput {
-  collection: CollectionUpdateOneRequiredWithoutCollectionRunNestedInput
-  createdAt: DateTimeFieldUpdateOperationsInput
-  finishedAt: DateTimeFieldUpdateOperationsInput
-  startedAt: DateTimeFieldUpdateOperationsInput
-}
-
-input CollectionRunUpsertWithWhereUniqueWithoutCollectionInput {
-  create: CollectionRunCreateWithoutCollectionInput!
-  update: CollectionRunUpdateWithoutCollectionInput!
-  where: CollectionRunWhereUniqueInput!
-}
-
-input CollectionRunUpsertWithWhereUniqueWithoutMonitorInput {
-  create: CollectionRunCreateWithoutMonitorInput!
-  update: CollectionRunUpdateWithoutMonitorInput!
-  where: CollectionRunWhereUniqueInput!
-}
-
-input CollectionRunWhereInput {
-  AND: [CollectionRunWhereInput!]
-  NOT: [CollectionRunWhereInput!]
-  OR: [CollectionRunWhereInput!]
-  collection: CollectionRelationFilter
-  collectionId: IntFilter
-  createdAt: DateTimeFilter
-  finishedAt: DateTimeFilter
-  id: IntFilter
-  monitor: MonitorRelationFilter
-  monitorId: IntFilter
-  startedAt: DateTimeFilter
-}
-
-input CollectionRunWhereUniqueInput {
-  id: Int
 }
 
 enum CollectionScalarFieldEnum {
@@ -887,7 +475,6 @@ input CollectionSumOrderByAggregateInput {
 }
 
 input CollectionUpdateInput {
-  CollectionRun: CollectionRunUpdateManyWithoutCollectionNestedInput
   Monitor: MonitorUpdateManyWithoutCollectionNestedInput
   createdAt: DateTimeFieldUpdateOperationsInput
   requests: RequestUpdateManyWithoutCollectionNestedInput
@@ -897,14 +484,6 @@ input CollectionUpdateInput {
 input CollectionUpdateManyMutationInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   title: StringFieldUpdateOperationsInput
-}
-
-input CollectionUpdateOneRequiredWithoutCollectionRunNestedInput {
-  connect: CollectionWhereUniqueInput
-  connectOrCreate: CollectionCreateOrConnectWithoutCollectionRunInput
-  create: CollectionCreateWithoutCollectionRunInput
-  update: CollectionUpdateWithoutCollectionRunInput
-  upsert: CollectionUpsertWithoutCollectionRunInput
 }
 
 input CollectionUpdateOneRequiredWithoutMonitorNestedInput {
@@ -923,30 +502,16 @@ input CollectionUpdateOneRequiredWithoutRequestsNestedInput {
   upsert: CollectionUpsertWithoutRequestsInput
 }
 
-input CollectionUpdateWithoutCollectionRunInput {
-  Monitor: MonitorUpdateManyWithoutCollectionNestedInput
-  createdAt: DateTimeFieldUpdateOperationsInput
-  requests: RequestUpdateManyWithoutCollectionNestedInput
-  title: StringFieldUpdateOperationsInput
-}
-
 input CollectionUpdateWithoutMonitorInput {
-  CollectionRun: CollectionRunUpdateManyWithoutCollectionNestedInput
   createdAt: DateTimeFieldUpdateOperationsInput
   requests: RequestUpdateManyWithoutCollectionNestedInput
   title: StringFieldUpdateOperationsInput
 }
 
 input CollectionUpdateWithoutRequestsInput {
-  CollectionRun: CollectionRunUpdateManyWithoutCollectionNestedInput
   Monitor: MonitorUpdateManyWithoutCollectionNestedInput
   createdAt: DateTimeFieldUpdateOperationsInput
   title: StringFieldUpdateOperationsInput
-}
-
-input CollectionUpsertWithoutCollectionRunInput {
-  create: CollectionCreateWithoutCollectionRunInput!
-  update: CollectionUpdateWithoutCollectionRunInput!
 }
 
 input CollectionUpsertWithoutMonitorInput {
@@ -961,7 +526,6 @@ input CollectionUpsertWithoutRequestsInput {
 
 input CollectionWhereInput {
   AND: [CollectionWhereInput!]
-  CollectionRun: CollectionRunListRelationFilter
   Monitor: MonitorListRelationFilter
   NOT: [CollectionWhereInput!]
   OR: [CollectionWhereInput!]
@@ -1065,6 +629,41 @@ input JsonFilter {
   string_starts_with: String
 }
 
+input JsonNullableFilter {
+  array_contains: JSON
+  array_ends_with: JSON
+  array_starts_with: JSON
+  equals: JSON
+  gt: JSON
+  gte: JSON
+  lt: JSON
+  lte: JSON
+  not: JSON
+  path: [String!]
+  string_contains: String
+  string_ends_with: String
+  string_starts_with: String
+}
+
+input JsonNullableWithAggregatesFilter {
+  _count: NestedIntNullableFilter
+  _max: NestedJsonNullableFilter
+  _min: NestedJsonNullableFilter
+  array_contains: JSON
+  array_ends_with: JSON
+  array_starts_with: JSON
+  equals: JSON
+  gt: JSON
+  gte: JSON
+  lt: JSON
+  lte: JSON
+  not: JSON
+  path: [String!]
+  string_contains: String
+  string_ends_with: String
+  string_starts_with: String
+}
+
 input JsonWithAggregatesFilter {
   _count: NestedIntFilter
   _max: NestedJsonFilter
@@ -1085,10 +684,8 @@ input JsonWithAggregatesFilter {
 }
 
 type Monitor {
-  _count: MonitorCount
   collection: Collection!
   collectionId: Int!
-  collectionRuns(cursor: CollectionRunWhereUniqueInput, distinct: [CollectionRunScalarFieldEnum!], orderBy: [CollectionRunOrderByWithRelationInput!], skip: Int, take: Int, where: CollectionRunWhereInput): [CollectionRun!]!
   createdAt: DateTime!
   env: String!
   id: Int!
@@ -1103,10 +700,6 @@ type MonitorAvgAggregate {
 input MonitorAvgOrderByAggregateInput {
   collectionId: SortOrder
   id: SortOrder
-}
-
-type MonitorCount {
-  collectionRuns: Int!
 }
 
 type MonitorCountAggregate {
@@ -1128,7 +721,6 @@ input MonitorCountOrderByAggregateInput {
 
 input MonitorCreateInput {
   collection: CollectionCreateNestedOneWithoutMonitorInput!
-  collectionRuns: CollectionRunCreateNestedManyWithoutMonitorInput
   createdAt: DateTime
   env: String!
   schedule: String!
@@ -1161,31 +753,12 @@ input MonitorCreateNestedManyWithoutCollectionInput {
   createMany: MonitorCreateManyCollectionInputEnvelope
 }
 
-input MonitorCreateNestedOneWithoutCollectionRunsInput {
-  connect: MonitorWhereUniqueInput
-  connectOrCreate: MonitorCreateOrConnectWithoutCollectionRunsInput
-  create: MonitorCreateWithoutCollectionRunsInput
-}
-
 input MonitorCreateOrConnectWithoutCollectionInput {
   create: MonitorCreateWithoutCollectionInput!
   where: MonitorWhereUniqueInput!
 }
 
-input MonitorCreateOrConnectWithoutCollectionRunsInput {
-  create: MonitorCreateWithoutCollectionRunsInput!
-  where: MonitorWhereUniqueInput!
-}
-
 input MonitorCreateWithoutCollectionInput {
-  collectionRuns: CollectionRunCreateNestedManyWithoutMonitorInput
-  createdAt: DateTime
-  env: String!
-  schedule: String!
-}
-
-input MonitorCreateWithoutCollectionRunsInput {
-  collection: CollectionCreateNestedOneWithoutMonitorInput!
   createdAt: DateTime
   env: String!
   schedule: String!
@@ -1262,16 +835,10 @@ input MonitorOrderByWithAggregationInput {
 input MonitorOrderByWithRelationInput {
   collection: CollectionOrderByWithRelationInput
   collectionId: SortOrder
-  collectionRuns: CollectionRunOrderByRelationAggregateInput
   createdAt: SortOrder
   env: SortOrder
   id: SortOrder
   schedule: SortOrder
-}
-
-input MonitorRelationFilter {
-  is: MonitorWhereInput
-  isNot: MonitorWhereInput
 }
 
 enum MonitorScalarFieldEnum {
@@ -1316,7 +883,6 @@ input MonitorSumOrderByAggregateInput {
 
 input MonitorUpdateInput {
   collection: CollectionUpdateOneRequiredWithoutMonitorNestedInput
-  collectionRuns: CollectionRunUpdateManyWithoutMonitorNestedInput
   createdAt: DateTimeFieldUpdateOperationsInput
   env: StringFieldUpdateOperationsInput
   schedule: StringFieldUpdateOperationsInput
@@ -1347,28 +913,12 @@ input MonitorUpdateManyWithoutCollectionNestedInput {
   upsert: [MonitorUpsertWithWhereUniqueWithoutCollectionInput!]
 }
 
-input MonitorUpdateOneRequiredWithoutCollectionRunsNestedInput {
-  connect: MonitorWhereUniqueInput
-  connectOrCreate: MonitorCreateOrConnectWithoutCollectionRunsInput
-  create: MonitorCreateWithoutCollectionRunsInput
-  update: MonitorUpdateWithoutCollectionRunsInput
-  upsert: MonitorUpsertWithoutCollectionRunsInput
-}
-
 input MonitorUpdateWithWhereUniqueWithoutCollectionInput {
   data: MonitorUpdateWithoutCollectionInput!
   where: MonitorWhereUniqueInput!
 }
 
 input MonitorUpdateWithoutCollectionInput {
-  collectionRuns: CollectionRunUpdateManyWithoutMonitorNestedInput
-  createdAt: DateTimeFieldUpdateOperationsInput
-  env: StringFieldUpdateOperationsInput
-  schedule: StringFieldUpdateOperationsInput
-}
-
-input MonitorUpdateWithoutCollectionRunsInput {
-  collection: CollectionUpdateOneRequiredWithoutMonitorNestedInput
   createdAt: DateTimeFieldUpdateOperationsInput
   env: StringFieldUpdateOperationsInput
   schedule: StringFieldUpdateOperationsInput
@@ -1380,18 +930,12 @@ input MonitorUpsertWithWhereUniqueWithoutCollectionInput {
   where: MonitorWhereUniqueInput!
 }
 
-input MonitorUpsertWithoutCollectionRunsInput {
-  create: MonitorCreateWithoutCollectionRunsInput!
-  update: MonitorUpdateWithoutCollectionRunsInput!
-}
-
 input MonitorWhereInput {
   AND: [MonitorWhereInput!]
   NOT: [MonitorWhereInput!]
   OR: [MonitorWhereInput!]
   collection: CollectionRelationFilter
   collectionId: IntFilter
-  collectionRuns: CollectionRunListRelationFilter
   createdAt: DateTimeFilter
   env: StringFilter
   id: IntFilter
@@ -1405,43 +949,36 @@ input MonitorWhereUniqueInput {
 type Mutation {
   createManyAssertion(data: [AssertionCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
   createManyCollection(data: [CollectionCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
-  createManyCollectionRun(data: [CollectionRunCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
   createManyMonitor(data: [MonitorCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
   createManyRequest(data: [RequestCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
   createManyResponse(data: [ResponseCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
   createOneAssertion(data: AssertionCreateInput!): Assertion!
   createOneCollection(data: CollectionCreateInput!): Collection!
-  createOneCollectionRun(data: CollectionRunCreateInput!): CollectionRun!
   createOneMonitor(data: MonitorCreateInput!): Monitor!
   createOneRequest(data: RequestCreateInput!): Request!
   createOneResponse(data: ResponseCreateInput!): Response!
   deleteManyAssertion(where: AssertionWhereInput): AffectedRowsOutput!
   deleteManyCollection(where: CollectionWhereInput): AffectedRowsOutput!
-  deleteManyCollectionRun(where: CollectionRunWhereInput): AffectedRowsOutput!
   deleteManyMonitor(where: MonitorWhereInput): AffectedRowsOutput!
   deleteManyRequest(where: RequestWhereInput): AffectedRowsOutput!
   deleteManyResponse(where: ResponseWhereInput): AffectedRowsOutput!
   deleteOneAssertion(where: AssertionWhereUniqueInput!): Assertion
   deleteOneCollection(where: CollectionWhereUniqueInput!): Collection
-  deleteOneCollectionRun(where: CollectionRunWhereUniqueInput!): CollectionRun
   deleteOneMonitor(where: MonitorWhereUniqueInput!): Monitor
   deleteOneRequest(where: RequestWhereUniqueInput!): Request
   deleteOneResponse(where: ResponseWhereUniqueInput!): Response
   updateManyAssertion(data: AssertionUpdateManyMutationInput!, where: AssertionWhereInput): AffectedRowsOutput!
   updateManyCollection(data: CollectionUpdateManyMutationInput!, where: CollectionWhereInput): AffectedRowsOutput!
-  updateManyCollectionRun(data: CollectionRunUpdateManyMutationInput!, where: CollectionRunWhereInput): AffectedRowsOutput!
   updateManyMonitor(data: MonitorUpdateManyMutationInput!, where: MonitorWhereInput): AffectedRowsOutput!
   updateManyRequest(data: RequestUpdateManyMutationInput!, where: RequestWhereInput): AffectedRowsOutput!
   updateManyResponse(data: ResponseUpdateManyMutationInput!, where: ResponseWhereInput): AffectedRowsOutput!
   updateOneAssertion(data: AssertionUpdateInput!, where: AssertionWhereUniqueInput!): Assertion
   updateOneCollection(data: CollectionUpdateInput!, where: CollectionWhereUniqueInput!): Collection
-  updateOneCollectionRun(data: CollectionRunUpdateInput!, where: CollectionRunWhereUniqueInput!): CollectionRun
   updateOneMonitor(data: MonitorUpdateInput!, where: MonitorWhereUniqueInput!): Monitor
   updateOneRequest(data: RequestUpdateInput!, where: RequestWhereUniqueInput!): Request
   updateOneResponse(data: ResponseUpdateInput!, where: ResponseWhereUniqueInput!): Response
   upsertOneAssertion(create: AssertionCreateInput!, update: AssertionUpdateInput!, where: AssertionWhereUniqueInput!): Assertion!
   upsertOneCollection(create: CollectionCreateInput!, update: CollectionUpdateInput!, where: CollectionWhereUniqueInput!): Collection!
-  upsertOneCollectionRun(create: CollectionRunCreateInput!, update: CollectionRunUpdateInput!, where: CollectionRunWhereUniqueInput!): CollectionRun!
   upsertOneMonitor(create: MonitorCreateInput!, update: MonitorUpdateInput!, where: MonitorWhereUniqueInput!): Monitor!
   upsertOneRequest(create: RequestCreateInput!, update: RequestUpdateInput!, where: RequestWhereUniqueInput!): Request!
   upsertOneResponse(create: ResponseCreateInput!, update: ResponseUpdateInput!, where: ResponseWhereUniqueInput!): Response!
@@ -1537,6 +1074,22 @@ input NestedJsonFilter {
   string_starts_with: String
 }
 
+input NestedJsonNullableFilter {
+  array_contains: JSON
+  array_ends_with: JSON
+  array_starts_with: JSON
+  equals: JSON
+  gt: JSON
+  gte: JSON
+  lt: JSON
+  lte: JSON
+  not: JSON
+  path: [String!]
+  string_contains: String
+  string_ends_with: String
+  string_starts_with: String
+}
+
 input NestedStringFilter {
   contains: String
   endsWith: String
@@ -1547,37 +1100,6 @@ input NestedStringFilter {
   lt: String
   lte: String
   not: NestedStringFilter
-  notIn: [String!]
-  startsWith: String
-}
-
-input NestedStringNullableFilter {
-  contains: String
-  endsWith: String
-  equals: String
-  gt: String
-  gte: String
-  in: [String!]
-  lt: String
-  lte: String
-  not: NestedStringNullableFilter
-  notIn: [String!]
-  startsWith: String
-}
-
-input NestedStringNullableWithAggregatesFilter {
-  _count: NestedIntNullableFilter
-  _max: NestedStringNullableFilter
-  _min: NestedStringNullableFilter
-  contains: String
-  endsWith: String
-  equals: String
-  gt: String
-  gte: String
-  in: [String!]
-  lt: String
-  lte: String
-  not: NestedStringNullableWithAggregatesFilter
   notIn: [String!]
   startsWith: String
 }
@@ -1599,32 +1121,23 @@ input NestedStringWithAggregatesFilter {
   startsWith: String
 }
 
-input NullableStringFieldUpdateOperationsInput {
-  set: String
-}
-
 type Query {
   aggregateAssertion(cursor: AssertionWhereUniqueInput, orderBy: [AssertionOrderByWithRelationInput!], skip: Int, take: Int, where: AssertionWhereInput): AggregateAssertion!
   aggregateCollection(cursor: CollectionWhereUniqueInput, orderBy: [CollectionOrderByWithRelationInput!], skip: Int, take: Int, where: CollectionWhereInput): AggregateCollection!
-  aggregateCollectionRun(cursor: CollectionRunWhereUniqueInput, orderBy: [CollectionRunOrderByWithRelationInput!], skip: Int, take: Int, where: CollectionRunWhereInput): AggregateCollectionRun!
   aggregateMonitor(cursor: MonitorWhereUniqueInput, orderBy: [MonitorOrderByWithRelationInput!], skip: Int, take: Int, where: MonitorWhereInput): AggregateMonitor!
   aggregateRequest(cursor: RequestWhereUniqueInput, orderBy: [RequestOrderByWithRelationInput!], skip: Int, take: Int, where: RequestWhereInput): AggregateRequest!
   aggregateResponse(cursor: ResponseWhereUniqueInput, orderBy: [ResponseOrderByWithRelationInput!], skip: Int, take: Int, where: ResponseWhereInput): AggregateResponse!
   assertion(where: AssertionWhereUniqueInput!): Assertion
   assertions(cursor: AssertionWhereUniqueInput, distinct: [AssertionScalarFieldEnum!], orderBy: [AssertionOrderByWithRelationInput!], skip: Int, take: Int, where: AssertionWhereInput): [Assertion!]!
   collection(where: CollectionWhereUniqueInput!): Collection
-  collectionRun(where: CollectionRunWhereUniqueInput!): CollectionRun
-  collectionRuns(cursor: CollectionRunWhereUniqueInput, distinct: [CollectionRunScalarFieldEnum!], orderBy: [CollectionRunOrderByWithRelationInput!], skip: Int, take: Int, where: CollectionRunWhereInput): [CollectionRun!]!
   collections(cursor: CollectionWhereUniqueInput, distinct: [CollectionScalarFieldEnum!], orderBy: [CollectionOrderByWithRelationInput!], skip: Int, take: Int, where: CollectionWhereInput): [Collection!]!
   findFirstAssertion(cursor: AssertionWhereUniqueInput, distinct: [AssertionScalarFieldEnum!], orderBy: [AssertionOrderByWithRelationInput!], skip: Int, take: Int, where: AssertionWhereInput): Assertion
   findFirstCollection(cursor: CollectionWhereUniqueInput, distinct: [CollectionScalarFieldEnum!], orderBy: [CollectionOrderByWithRelationInput!], skip: Int, take: Int, where: CollectionWhereInput): Collection
-  findFirstCollectionRun(cursor: CollectionRunWhereUniqueInput, distinct: [CollectionRunScalarFieldEnum!], orderBy: [CollectionRunOrderByWithRelationInput!], skip: Int, take: Int, where: CollectionRunWhereInput): CollectionRun
   findFirstMonitor(cursor: MonitorWhereUniqueInput, distinct: [MonitorScalarFieldEnum!], orderBy: [MonitorOrderByWithRelationInput!], skip: Int, take: Int, where: MonitorWhereInput): Monitor
   findFirstRequest(cursor: RequestWhereUniqueInput, distinct: [RequestScalarFieldEnum!], orderBy: [RequestOrderByWithRelationInput!], skip: Int, take: Int, where: RequestWhereInput): Request
   findFirstResponse(cursor: ResponseWhereUniqueInput, distinct: [ResponseScalarFieldEnum!], orderBy: [ResponseOrderByWithRelationInput!], skip: Int, take: Int, where: ResponseWhereInput): Response
   groupByAssertion(by: [AssertionScalarFieldEnum!]!, having: AssertionScalarWhereWithAggregatesInput, orderBy: [AssertionOrderByWithAggregationInput!], skip: Int, take: Int, where: AssertionWhereInput): [AssertionGroupBy!]!
   groupByCollection(by: [CollectionScalarFieldEnum!]!, having: CollectionScalarWhereWithAggregatesInput, orderBy: [CollectionOrderByWithAggregationInput!], skip: Int, take: Int, where: CollectionWhereInput): [CollectionGroupBy!]!
-  groupByCollectionRun(by: [CollectionRunScalarFieldEnum!]!, having: CollectionRunScalarWhereWithAggregatesInput, orderBy: [CollectionRunOrderByWithAggregationInput!], skip: Int, take: Int, where: CollectionRunWhereInput): [CollectionRunGroupBy!]!
   groupByMonitor(by: [MonitorScalarFieldEnum!]!, having: MonitorScalarWhereWithAggregatesInput, orderBy: [MonitorOrderByWithAggregationInput!], skip: Int, take: Int, where: MonitorWhereInput): [MonitorGroupBy!]!
   groupByRequest(by: [RequestScalarFieldEnum!]!, having: RequestScalarWhereWithAggregatesInput, orderBy: [RequestOrderByWithAggregationInput!], skip: Int, take: Int, where: RequestWhereInput): [RequestGroupBy!]!
   groupByResponse(by: [ResponseScalarFieldEnum!]!, having: ResponseScalarWhereWithAggregatesInput, orderBy: [ResponseOrderByWithAggregationInput!], skip: Int, take: Int, where: ResponseWhereInput): [ResponseGroupBy!]!
@@ -1644,14 +1157,15 @@ enum QueryMode {
 type Request {
   _count: RequestCount
   assertions(cursor: AssertionWhereUniqueInput, distinct: [AssertionScalarFieldEnum!], orderBy: [AssertionOrderByWithRelationInput!], skip: Int, take: Int, where: AssertionWhereInput): [Assertion!]!
-  body: JSON!
+  body: JSON
   collection: Collection!
   collectionId: Int!
   createdAt: DateTime!
-  headers: JSON!
+  headers: JSON
   id: Int!
   method: String!
   responses(cursor: ResponseWhereUniqueInput, distinct: [ResponseScalarFieldEnum!], orderBy: [ResponseOrderByWithRelationInput!], skip: Int, take: Int, where: ResponseWhereInput): [Response!]!
+  stepNumber: Int!
   title: String!
   url: String!
 }
@@ -1659,11 +1173,13 @@ type Request {
 type RequestAvgAggregate {
   collectionId: Float
   id: Float
+  stepNumber: Float
 }
 
 input RequestAvgOrderByAggregateInput {
   collectionId: SortOrder
   id: SortOrder
+  stepNumber: SortOrder
 }
 
 type RequestCount {
@@ -1679,6 +1195,7 @@ type RequestCountAggregate {
   headers: Int!
   id: Int!
   method: Int!
+  stepNumber: Int!
   title: Int!
   url: Int!
 }
@@ -1690,28 +1207,31 @@ input RequestCountOrderByAggregateInput {
   headers: SortOrder
   id: SortOrder
   method: SortOrder
+  stepNumber: SortOrder
   title: SortOrder
   url: SortOrder
 }
 
 input RequestCreateInput {
   assertions: AssertionCreateNestedManyWithoutRequestInput
-  body: JSON!
+  body: JSON
   collection: CollectionCreateNestedOneWithoutRequestsInput!
   createdAt: DateTime
-  headers: JSON!
+  headers: JSON
   method: String!
   responses: ResponseCreateNestedManyWithoutRequestInput
+  stepNumber: Int!
   title: String!
   url: String!
 }
 
 input RequestCreateManyCollectionInput {
-  body: JSON!
+  body: JSON
   createdAt: DateTime
-  headers: JSON!
+  headers: JSON
   id: Int
   method: String!
+  stepNumber: Int!
   title: String!
   url: String!
 }
@@ -1722,12 +1242,13 @@ input RequestCreateManyCollectionInputEnvelope {
 }
 
 input RequestCreateManyInput {
-  body: JSON!
+  body: JSON
   collectionId: Int!
   createdAt: DateTime
-  headers: JSON!
+  headers: JSON
   id: Int
   method: String!
+  stepNumber: Int!
   title: String!
   url: String!
 }
@@ -1767,34 +1288,37 @@ input RequestCreateOrConnectWithoutResponsesInput {
 }
 
 input RequestCreateWithoutAssertionsInput {
-  body: JSON!
+  body: JSON
   collection: CollectionCreateNestedOneWithoutRequestsInput!
   createdAt: DateTime
-  headers: JSON!
+  headers: JSON
   method: String!
   responses: ResponseCreateNestedManyWithoutRequestInput
+  stepNumber: Int!
   title: String!
   url: String!
 }
 
 input RequestCreateWithoutCollectionInput {
   assertions: AssertionCreateNestedManyWithoutRequestInput
-  body: JSON!
+  body: JSON
   createdAt: DateTime
-  headers: JSON!
+  headers: JSON
   method: String!
   responses: ResponseCreateNestedManyWithoutRequestInput
+  stepNumber: Int!
   title: String!
   url: String!
 }
 
 input RequestCreateWithoutResponsesInput {
   assertions: AssertionCreateNestedManyWithoutRequestInput
-  body: JSON!
+  body: JSON
   collection: CollectionCreateNestedOneWithoutRequestsInput!
   createdAt: DateTime
-  headers: JSON!
+  headers: JSON
   method: String!
+  stepNumber: Int!
   title: String!
   url: String!
 }
@@ -1805,12 +1329,13 @@ type RequestGroupBy {
   _max: RequestMaxAggregate
   _min: RequestMinAggregate
   _sum: RequestSumAggregate
-  body: JSON!
+  body: JSON
   collectionId: Int!
   createdAt: DateTime!
-  headers: JSON!
+  headers: JSON
   id: Int!
   method: String!
+  stepNumber: Int!
   title: String!
   url: String!
 }
@@ -1826,6 +1351,7 @@ type RequestMaxAggregate {
   createdAt: DateTime
   id: Int
   method: String
+  stepNumber: Int
   title: String
   url: String
 }
@@ -1835,6 +1361,7 @@ input RequestMaxOrderByAggregateInput {
   createdAt: SortOrder
   id: SortOrder
   method: SortOrder
+  stepNumber: SortOrder
   title: SortOrder
   url: SortOrder
 }
@@ -1844,6 +1371,7 @@ type RequestMinAggregate {
   createdAt: DateTime
   id: Int
   method: String
+  stepNumber: Int
   title: String
   url: String
 }
@@ -1853,6 +1381,7 @@ input RequestMinOrderByAggregateInput {
   createdAt: SortOrder
   id: SortOrder
   method: SortOrder
+  stepNumber: SortOrder
   title: SortOrder
   url: SortOrder
 }
@@ -1873,6 +1402,7 @@ input RequestOrderByWithAggregationInput {
   headers: SortOrder
   id: SortOrder
   method: SortOrder
+  stepNumber: SortOrder
   title: SortOrder
   url: SortOrder
 }
@@ -1887,6 +1417,7 @@ input RequestOrderByWithRelationInput {
   id: SortOrder
   method: SortOrder
   responses: ResponseOrderByRelationAggregateInput
+  stepNumber: SortOrder
   title: SortOrder
   url: SortOrder
 }
@@ -1903,6 +1434,7 @@ enum RequestScalarFieldEnum {
   headers
   id
   method
+  stepNumber
   title
   url
 }
@@ -1911,12 +1443,13 @@ input RequestScalarWhereInput {
   AND: [RequestScalarWhereInput!]
   NOT: [RequestScalarWhereInput!]
   OR: [RequestScalarWhereInput!]
-  body: JsonFilter
+  body: JsonNullableFilter
   collectionId: IntFilter
   createdAt: DateTimeFilter
-  headers: JsonFilter
+  headers: JsonNullableFilter
   id: IntFilter
   method: StringFilter
+  stepNumber: IntFilter
   title: StringFilter
   url: StringFilter
 }
@@ -1925,12 +1458,13 @@ input RequestScalarWhereWithAggregatesInput {
   AND: [RequestScalarWhereWithAggregatesInput!]
   NOT: [RequestScalarWhereWithAggregatesInput!]
   OR: [RequestScalarWhereWithAggregatesInput!]
-  body: JsonWithAggregatesFilter
+  body: JsonNullableWithAggregatesFilter
   collectionId: IntWithAggregatesFilter
   createdAt: DateTimeWithAggregatesFilter
-  headers: JsonWithAggregatesFilter
+  headers: JsonNullableWithAggregatesFilter
   id: IntWithAggregatesFilter
   method: StringWithAggregatesFilter
+  stepNumber: IntWithAggregatesFilter
   title: StringWithAggregatesFilter
   url: StringWithAggregatesFilter
 }
@@ -1938,11 +1472,13 @@ input RequestScalarWhereWithAggregatesInput {
 type RequestSumAggregate {
   collectionId: Int
   id: Int
+  stepNumber: Int
 }
 
 input RequestSumOrderByAggregateInput {
   collectionId: SortOrder
   id: SortOrder
+  stepNumber: SortOrder
 }
 
 input RequestUpdateInput {
@@ -1953,6 +1489,7 @@ input RequestUpdateInput {
   headers: JSON
   method: StringFieldUpdateOperationsInput
   responses: ResponseUpdateManyWithoutRequestNestedInput
+  stepNumber: IntFieldUpdateOperationsInput
   title: StringFieldUpdateOperationsInput
   url: StringFieldUpdateOperationsInput
 }
@@ -1962,6 +1499,7 @@ input RequestUpdateManyMutationInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   headers: JSON
   method: StringFieldUpdateOperationsInput
+  stepNumber: IntFieldUpdateOperationsInput
   title: StringFieldUpdateOperationsInput
   url: StringFieldUpdateOperationsInput
 }
@@ -2013,6 +1551,7 @@ input RequestUpdateWithoutAssertionsInput {
   headers: JSON
   method: StringFieldUpdateOperationsInput
   responses: ResponseUpdateManyWithoutRequestNestedInput
+  stepNumber: IntFieldUpdateOperationsInput
   title: StringFieldUpdateOperationsInput
   url: StringFieldUpdateOperationsInput
 }
@@ -2024,6 +1563,7 @@ input RequestUpdateWithoutCollectionInput {
   headers: JSON
   method: StringFieldUpdateOperationsInput
   responses: ResponseUpdateManyWithoutRequestNestedInput
+  stepNumber: IntFieldUpdateOperationsInput
   title: StringFieldUpdateOperationsInput
   url: StringFieldUpdateOperationsInput
 }
@@ -2035,6 +1575,7 @@ input RequestUpdateWithoutResponsesInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   headers: JSON
   method: StringFieldUpdateOperationsInput
+  stepNumber: IntFieldUpdateOperationsInput
   title: StringFieldUpdateOperationsInput
   url: StringFieldUpdateOperationsInput
 }
@@ -2060,14 +1601,15 @@ input RequestWhereInput {
   NOT: [RequestWhereInput!]
   OR: [RequestWhereInput!]
   assertions: AssertionListRelationFilter
-  body: JsonFilter
+  body: JsonNullableFilter
   collection: CollectionRelationFilter
   collectionId: IntFilter
   createdAt: DateTimeFilter
-  headers: JsonFilter
+  headers: JsonNullableFilter
   id: IntFilter
   method: StringFilter
   responses: ResponseListRelationFilter
+  stepNumber: IntFilter
   title: StringFilter
   url: StringFilter
 }
@@ -2384,39 +1926,6 @@ input StringFilter {
   lte: String
   mode: QueryMode
   not: NestedStringFilter
-  notIn: [String!]
-  startsWith: String
-}
-
-input StringNullableFilter {
-  contains: String
-  endsWith: String
-  equals: String
-  gt: String
-  gte: String
-  in: [String!]
-  lt: String
-  lte: String
-  mode: QueryMode
-  not: NestedStringNullableFilter
-  notIn: [String!]
-  startsWith: String
-}
-
-input StringNullableWithAggregatesFilter {
-  _count: NestedIntNullableFilter
-  _max: NestedStringNullableFilter
-  _min: NestedStringNullableFilter
-  contains: String
-  endsWith: String
-  equals: String
-  gt: String
-  gte: String
-  in: [String!]
-  lt: String
-  lte: String
-  mode: QueryMode
-  not: NestedStringNullableWithAggregatesFilter
   notIn: [String!]
   startsWith: String
 }
