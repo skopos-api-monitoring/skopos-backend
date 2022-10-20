@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator typegraphql {
+  provider = "typegraphql-prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Collection {
+  id            Int             @id @default(autoincrement())
+  title         String
+  requests      Request[]
+  createdAt     DateTime        @default(now())
+  Monitor       Monitor[]
+  CollectionRun CollectionRun[]
+}
+
+model Request {
+  id           Int         @id @default(autoincrement())
+  title        String
+  method       String
+  url          String
+  headers      Json
+  body         Json
+  collectionId Int
+  collection   Collection  @relation(fields: [collectionId], references: [id])
+  assertions   Assertion[]
+  responses    Response[]
+  createdAt    DateTime    @default(now())
+}
+
+model Assertion {
+  id        Int      @id @default(autoincrement())
+  property  String
+  expected  String
+  actual    String?
+  requestId Int
+  request   Request  @relation(fields: [requestId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  createdAt DateTime @default(now())
+}
+
+model Response {
+  id        Int      @id @default(autoincrement())
+  status    Int
+  headers   Json
+  latency   Int
+  requestId Int
+  request   Request  @relation(fields: [requestId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Monitor {
+  id             Int             @id @default(autoincrement())
+  collectionId   Int
+  collection     Collection      @relation(fields: [collectionId], references: [id])
+  schedule       String
+  env            String
+  collectionRuns CollectionRun[]
+  createdAt      DateTime        @default(now())
+}
+
+model CollectionRun {
+  id           Int        @id @default(autoincrement())
+  collectionId Int
+  collection   Collection @relation(fields: [collectionId], references: [id])
+  monitorId    Int
+  monitor      Monitor    @relation(fields: [monitorId], references: [id])
+  startedAt    DateTime
+  finishedAt   DateTime
+  createdAt    DateTime   @default(now())
+}
