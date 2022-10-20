@@ -38,22 +38,35 @@ model Request {
 }
 
 model Assertion {
-  id        Int      @id @default(autoincrement())
-  property  String
-  expected  String
-  requestId Int
-  request   Request  @relation(fields: [requestId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  createdAt DateTime @default(now())
+  id               Int                @id @default(autoincrement())
+  property         String
+  expected         String
+  requestId        Int
+  request          Request            @relation(fields: [requestId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  createdAt        DateTime           @default(now())
+  AssertionResults AssertionResults[]
 }
 
 model Response {
-  id        Int      @id @default(autoincrement())
-  status    Int
-  headers   Json
-  latency   Int
-  requestId Int
-  request   Request  @relation(fields: [requestId], references: [id])
-  createdAt DateTime @default(now())
+  id               Int                @id @default(autoincrement())
+  status           Int
+  headers          Json
+  latency          Int
+  requestId        Int
+  request          Request            @relation(fields: [requestId], references: [id])
+  createdAt        DateTime           @default(now())
+  AssertionResults AssertionResults[]
+}
+
+model AssertionResults {
+  id          Int       @id @default(autoincrement())
+  actual      String
+  createdAt   DateTime
+  assertion   Assertion @relation(fields: [assertionId], references: [id])
+  assertionId Int
+  response    Response  @relation(fields: [responseId], references: [id])
+  responseId  Int
+  pass        Boolean
 }
 
 model Monitor {
@@ -64,4 +77,3 @@ model Monitor {
   env          String
   createdAt    DateTime   @default(now())
 }
-
