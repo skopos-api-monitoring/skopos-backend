@@ -62,7 +62,7 @@ model Response {
 model AssertionResults {
   id          Int       @id @default(autoincrement())
   actual      String
-  createdAt   DateTime
+  createdAt   DateTime  @default(now())
   assertion   Assertion @relation(fields: [assertionId], references: [id])
   assertionId Int
   response    Response  @relation(fields: [responseId], references: [id])
