@@ -15,19 +15,29 @@ datasource db {
 }
 
 model Collection {
-  id        Int       @id @default(autoincrement())
-  title     String
-  requests  Request[]
-  createdAt DateTime  @default(now())
-  Monitor   Monitor[]
+  id            Int             @id @default(autoincrement())
+  title         String
+  requests      Request[]
+  createdAt     DateTime        @default(now())
+  CollectionRun CollectionRun[]
+  Monitor       Monitor[]
+}
+
+model CollectionRun {
+  id           Int        @id @default(autoincrement())
+  createdAt    DateTime   @default(now())
+  success      Boolean
+  Collection   Collection @relation(fields: [collectionId], references: [id])
+  collectionId Int
+  Responses    Response[]
 }
 
 model Request {
   id           Int         @id @default(autoincrement())
   title        String
   createdAt    DateTime    @default(now())
-  method       String
   url          String
+  method       String
   headers      Json?
   body         Json?
   stepNumber   Int
@@ -40,6 +50,7 @@ model Request {
 model Assertion {
   id               Int                @id @default(autoincrement())
   property         String
+  comparison       String
   expected         String
   requestId        Int
   request          Request            @relation(fields: [requestId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -57,11 +68,12 @@ model Response {
   request          Request            @relation(fields: [requestId], references: [id])
   createdAt        DateTime           @default(now())
   AssertionResults AssertionResults[]
+  CollectionRun    CollectionRun?     @relation(fields: [collectionRunId], references: [id])
+  collectionRunId  Int?
 }
 
 model AssertionResults {
   id          Int       @id @default(autoincrement())
-  actual      String
   createdAt   DateTime  @default(now())
   assertion   Assertion @relation(fields: [assertionId], references: [id])
   assertionId Int
