@@ -2085,6 +2085,7 @@ input RequestWhereUniqueInput {
 type Response {
   AssertionResults(cursor: AssertionResultsWhereUniqueInput, distinct: [AssertionResultsScalarFieldEnum!], orderBy: [AssertionResultsOrderByWithRelationInput!], skip: Int, take: Int, where: AssertionResultsWhereInput): [AssertionResults!]!
   _count: ResponseCount
+  body: JSON
   createdAt: DateTime!
   headers: JSON!
   id: Int!
@@ -2114,6 +2115,7 @@ type ResponseCount {
 
 type ResponseCountAggregate {
   _all: Int!
+  body: Int!
   createdAt: Int!
   headers: Int!
   id: Int!
@@ -2123,6 +2125,7 @@ type ResponseCountAggregate {
 }
 
 input ResponseCountOrderByAggregateInput {
+  body: SortOrder
   createdAt: SortOrder
   headers: SortOrder
   id: SortOrder
@@ -2133,6 +2136,7 @@ input ResponseCountOrderByAggregateInput {
 
 input ResponseCreateInput {
   AssertionResults: AssertionResultsCreateNestedManyWithoutResponseInput
+  body: JSON
   createdAt: DateTime
   headers: JSON!
   latency: Int!
@@ -2141,6 +2145,7 @@ input ResponseCreateInput {
 }
 
 input ResponseCreateManyInput {
+  body: JSON
   createdAt: DateTime
   headers: JSON!
   id: Int
@@ -2150,6 +2155,7 @@ input ResponseCreateManyInput {
 }
 
 input ResponseCreateManyRequestInput {
+  body: JSON
   createdAt: DateTime
   headers: JSON!
   id: Int
@@ -2186,6 +2192,7 @@ input ResponseCreateOrConnectWithoutRequestInput {
 }
 
 input ResponseCreateWithoutAssertionResultsInput {
+  body: JSON
   createdAt: DateTime
   headers: JSON!
   latency: Int!
@@ -2195,6 +2202,7 @@ input ResponseCreateWithoutAssertionResultsInput {
 
 input ResponseCreateWithoutRequestInput {
   AssertionResults: AssertionResultsCreateNestedManyWithoutResponseInput
+  body: JSON
   createdAt: DateTime
   headers: JSON!
   latency: Int!
@@ -2207,6 +2215,7 @@ type ResponseGroupBy {
   _max: ResponseMaxAggregate
   _min: ResponseMinAggregate
   _sum: ResponseSumAggregate
+  body: JSON
   createdAt: DateTime!
   headers: JSON!
   id: Int!
@@ -2263,6 +2272,7 @@ input ResponseOrderByWithAggregationInput {
   _max: ResponseMaxOrderByAggregateInput
   _min: ResponseMinOrderByAggregateInput
   _sum: ResponseSumOrderByAggregateInput
+  body: SortOrder
   createdAt: SortOrder
   headers: SortOrder
   id: SortOrder
@@ -2273,6 +2283,7 @@ input ResponseOrderByWithAggregationInput {
 
 input ResponseOrderByWithRelationInput {
   AssertionResults: AssertionResultsOrderByRelationAggregateInput
+  body: SortOrder
   createdAt: SortOrder
   headers: SortOrder
   id: SortOrder
@@ -2288,6 +2299,7 @@ input ResponseRelationFilter {
 }
 
 enum ResponseScalarFieldEnum {
+  body
   createdAt
   headers
   id
@@ -2300,6 +2312,7 @@ input ResponseScalarWhereInput {
   AND: [ResponseScalarWhereInput!]
   NOT: [ResponseScalarWhereInput!]
   OR: [ResponseScalarWhereInput!]
+  body: JsonNullableFilter
   createdAt: DateTimeFilter
   headers: JsonFilter
   id: IntFilter
@@ -2312,6 +2325,7 @@ input ResponseScalarWhereWithAggregatesInput {
   AND: [ResponseScalarWhereWithAggregatesInput!]
   NOT: [ResponseScalarWhereWithAggregatesInput!]
   OR: [ResponseScalarWhereWithAggregatesInput!]
+  body: JsonNullableWithAggregatesFilter
   createdAt: DateTimeWithAggregatesFilter
   headers: JsonWithAggregatesFilter
   id: IntWithAggregatesFilter
@@ -2336,6 +2350,7 @@ input ResponseSumOrderByAggregateInput {
 
 input ResponseUpdateInput {
   AssertionResults: AssertionResultsUpdateManyWithoutResponseNestedInput
+  body: JSON
   createdAt: DateTimeFieldUpdateOperationsInput
   headers: JSON
   latency: IntFieldUpdateOperationsInput
@@ -2344,6 +2359,7 @@ input ResponseUpdateInput {
 }
 
 input ResponseUpdateManyMutationInput {
+  body: JSON
   createdAt: DateTimeFieldUpdateOperationsInput
   headers: JSON
   latency: IntFieldUpdateOperationsInput
@@ -2383,6 +2399,7 @@ input ResponseUpdateWithWhereUniqueWithoutRequestInput {
 }
 
 input ResponseUpdateWithoutAssertionResultsInput {
+  body: JSON
   createdAt: DateTimeFieldUpdateOperationsInput
   headers: JSON
   latency: IntFieldUpdateOperationsInput
@@ -2392,6 +2409,7 @@ input ResponseUpdateWithoutAssertionResultsInput {
 
 input ResponseUpdateWithoutRequestInput {
   AssertionResults: AssertionResultsUpdateManyWithoutResponseNestedInput
+  body: JSON
   createdAt: DateTimeFieldUpdateOperationsInput
   headers: JSON
   latency: IntFieldUpdateOperationsInput
@@ -2414,6 +2432,7 @@ input ResponseWhereInput {
   AssertionResults: AssertionResultsListRelationFilter
   NOT: [ResponseWhereInput!]
   OR: [ResponseWhereInput!]
+  body: JsonNullableFilter
   createdAt: DateTimeFilter
   headers: JsonFilter
   id: IntFilter
