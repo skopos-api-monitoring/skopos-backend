@@ -26,8 +26,7 @@ model Collection {
 model CollectionRun {
   id           Int        @id @default(autoincrement())
   createdAt    DateTime   @default(now())
-  success      Boolean
-  Collection   Collection @relation(fields: [collectionId], references: [id])
+  Collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   collectionId Int
   Responses    Response[]
 }
@@ -42,44 +41,47 @@ model Request {
   body         Json?
   stepNumber   Int
   collectionId Int
-  collection   Collection  @relation(fields: [collectionId], references: [id])
+  Collection   Collection  @relation(fields: [collectionId], references: [id])
   assertions   Assertion[]
-  responses    Response[]
 }
 
 model Assertion {
-  id               Int                @id @default(autoincrement())
-  property         String
-  comparison       String
-  expected         String
-  requestId        Int
-  request          Request            @relation(fields: [requestId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  createdAt        DateTime           @default(now())
-  AssertionResults AssertionResults[]
+  id         Int      @id @default(autoincrement())
+  property   String
+  comparison String
+  expected   String
+  requestId  Int
+  Request    Request  @relation(fields: [requestId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  createdAt  DateTime @default(now())
 }
 
 model Response {
-  id               Int                @id @default(autoincrement())
-  status           Int
-  headers          Json
-  body             Json?
-  latency          Int
-  requestId        Int
-  request          Request            @relation(fields: [requestId], references: [id])
-  createdAt        DateTime           @default(now())
-  AssertionResults AssertionResults[]
-  CollectionRun    CollectionRun?     @relation(fields: [collectionRunId], references: [id])
-  collectionRunId  Int?
+  id                Int                @id @default(autoincrement())
+  status            Int
+  headers           Json
+  body              Json?
+  latency           Int
+  createdAt         DateTime           @default(now())
+  AssertionResults  AssertionResults[]
+  CollectionRun     CollectionRun?     @relation(fields: [collectionRunId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  collectionRunId   Int?
+  requestTitle      String
+  requestMethod     String
+  requestUrl        String
+  requestHeaders    Json?
+  requestBody       Json?
+  requestStepNumber Int
 }
 
 model AssertionResults {
-  id          Int       @id @default(autoincrement())
-  createdAt   DateTime  @default(now())
-  assertion   Assertion @relation(fields: [assertionId], references: [id])
-  assertionId Int
-  response    Response  @relation(fields: [responseId], references: [id])
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  response    Response @relation(fields: [responseId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   responseId  Int
   pass        Boolean
+  property    String
+  comparision String
+  expected    String
 }
 
 model Monitor {
