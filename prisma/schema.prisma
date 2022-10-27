@@ -76,6 +76,7 @@ model AssertionResult {
   response    Response? @relation(fields: [responseId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   responseId  Int?
   pass        Boolean
+  actual      String
 }
 
 model Monitor {
