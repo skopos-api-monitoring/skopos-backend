@@ -43,6 +43,7 @@ model Request {
   collectionId Int?
   Collection   Collection? @relation(fields: [collectionId], references: [id])
   assertions   Assertion[]
+  Response     Response[]
 }
 
 model Assertion {
@@ -51,44 +52,41 @@ model Assertion {
   comparison String
   expected   String
   requestId  Int?
-  Request    Request?  @relation(fields: [requestId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  Request    Request? @relation(fields: [requestId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   createdAt  DateTime @default(now())
 }
 
 model Response {
-  id                Int               @id @default(autoincrement())
-  status            Int
-  headers           Json
-  body              Json?
-  latency           Int
-  createdAt         DateTime          @default(now())
-  assertionResults   AssertionResult[]
-  CollectionRun     CollectionRun?    @relation(fields: [collectionRunId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  collectionRunId   Int?
-  requestTitle      String
-  requestMethod     String
-  requestUrl        String
-  requestHeaders    Json?
-  requestBody       Json?
-  requestStepNumber Int
+  id               Int               @id @default(autoincrement())
+  status           Int
+  headers          Json
+  body             Json?
+  latency          Int
+  createdAt        DateTime          @default(now())
+  assertionResults AssertionResult[]
+  CollectionRun    CollectionRun?    @relation(fields: [collectionRunId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  collectionRunId  Int?
+  Request          Request?          @relation(fields: [requestId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  requestId        Int?
+  assertions       Json?
 }
 
 model AssertionResult {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  response    Response? @relation(fields: [responseId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  responseId  Int?
-  pass        Boolean
-  property    String
-  comparision String
-  expected    String
+  id         Int       @id @default(autoincrement())
+  createdAt  DateTime  @default(now())
+  response   Response? @relation(fields: [responseId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  responseId Int?
+  pass       Boolean
+  property   String
+  comparison String
+  expected   String
 }
 
 model Monitor {
-  id           Int        @id @default(autoincrement())
+  id           Int         @id @default(autoincrement())
   collectionId Int?
   Collection   Collection? @relation(fields: [collectionId], references: [id])
   schedule     String
   env          String
-  createdAt    DateTime   @default(now())
+  createdAt    DateTime    @default(now())
 }
