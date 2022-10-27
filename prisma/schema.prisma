@@ -75,6 +75,7 @@ model AssertionResult {
   createdAt   DateTime @default(now())
   response    Response? @relation(fields: [responseId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   responseId  Int?
+  assertionId Int?
   pass        Boolean
   actual      String
 }
