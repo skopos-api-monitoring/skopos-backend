@@ -43,6 +43,7 @@ model Request {
   collectionId Int?
   Collection   Collection? @relation(fields: [collectionId], references: [id])
   assertions   Assertion[]
+  responses    Response[]
 }
 
 model Assertion {
@@ -65,12 +66,8 @@ model Response {
   assertionResults   AssertionResult[]
   CollectionRun     CollectionRun?    @relation(fields: [collectionRunId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   collectionRunId   Int?
-  requestTitle      String
-  requestMethod     String
-  requestUrl        String
-  requestHeaders    Json?
-  requestBody       Json?
-  requestStepNumber Int
+  Request           Request?    @relation(fields: [requestId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  requestId         Int?
 }
 
 model AssertionResult {
@@ -79,9 +76,6 @@ model AssertionResult {
   response    Response? @relation(fields: [responseId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   responseId  Int?
   pass        Boolean
-  property    String
-  comparision String
-  expected    String
 }
 
 model Monitor {
