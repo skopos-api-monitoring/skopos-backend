@@ -63,7 +63,7 @@ model Response {
   body              Json?
   latency           Int
   createdAt         DateTime          @default(now())
-  AssertionResult   AssertionResult[]
+  assertionResults   AssertionResult[]
   CollectionRun     CollectionRun?    @relation(fields: [collectionRunId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   collectionRunId   Int?
   Request           Request?    @relation(fields: [requestId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -81,7 +81,7 @@ model AssertionResult {
 model Monitor {
   id           Int        @id @default(autoincrement())
   collectionId Int?
-  collection   Collection? @relation(fields: [collectionId], references: [id])
+  Collection   Collection? @relation(fields: [collectionId], references: [id])
   schedule     String
   env          String
   createdAt    DateTime   @default(now())
