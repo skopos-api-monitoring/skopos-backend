@@ -87,7 +87,17 @@ model AssertionResult {
 
 model Monitor {
   id           Int        @id @default(autoincrement())
-  schedule     String
+  schedule     Schedule
+  contactInfo  Contact
   createdAt    DateTime   @default(now())
   Collections  Collection[]
+}
+
+model Schedule {
+  value String,
+  unit String
+}
+
+model Contact {
+  email String
 }

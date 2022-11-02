@@ -2,17 +2,34 @@ import 'reflect-metadata'
 import {PrismaClient} from '@prisma/client'
 import {ApolloServer} from 'apollo-server-express'
 import path from 'path'
-import {buildSchema} from 'type-graphql'
-import { resolvers } from "@generated/type-graphql"
+import { resolvers, applyResolversEnhanceMap, ResolversEnhanceMap } from "@generated/type-graphql"
 import express from 'express'
 import axios from 'axios'
 import { getCollectionData } from './services/collectionServices'
+import { buildSchema, MiddlewareFn, UseMiddleware } from "type-graphql";
+//import { mutateRule } from '../utils/eventBridgeRules'
 
 interface Context {
   prisma: PrismaClient;
 }
 
 const app = express()
+
+const AddSchedule: MiddlewareFn = async (_, next) => {
+  const data = await next()
+  console.log(data)
+  //mutateRule(data)
+  return data
+}
+
+const resolversEnhanceMap: ResolversEnhanceMap = {
+  Monitor: {
+    createManyMonitor: [UseMiddleware(AddSchedule)],
+  },
+}
+
+applyResolversEnhanceMap(resolversEnhanceMap)
+
 async function main() {
   const schema = await buildSchema({
     resolvers,
