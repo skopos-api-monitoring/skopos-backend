@@ -20,7 +20,8 @@ model Collection {
   requests      Request[]
   createdAt     DateTime        @default(now())
   CollectionRun CollectionRun[]
-  Monitor       Monitor[]
+  monitorId     Int?
+  Monitor       Monitor? @relation(fields: [monitorId], references: [id])
 }
 
 model CollectionRun {
@@ -86,9 +87,7 @@ model AssertionResult {
 
 model Monitor {
   id           Int        @id @default(autoincrement())
-  collectionId Int?
-  Collection   Collection? @relation(fields: [collectionId], references: [id])
   schedule     String
-  env          String
   createdAt    DateTime   @default(now())
+  Collections  Collection[]
 }
