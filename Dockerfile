@@ -7,9 +7,9 @@ COPY . .
 
 RUN npm install
 
-RUN npx prisma generate
+RUN npx prisma migrate dev --name "final"
 RUN npm run build 
 
-EXPOSE 80
+EXPOSE 3001
 
 CMD ["node", "dist/index.js"]
