@@ -1,3 +1,9 @@
+/*
+  Warnings:
+
+  - Added the required column `actual` to the `AssertionResult` table without a default value. This is not possible if the table is not empty.
+
+*/
 -- DropForeignKey
 ALTER TABLE "Monitor" DROP CONSTRAINT "Monitor_collectionId_fkey";
 
@@ -8,7 +14,8 @@ ALTER TABLE "Request" DROP CONSTRAINT "Request_collectionId_fkey";
 ALTER TABLE "Assertion" ALTER COLUMN "requestId" DROP NOT NULL;
 
 -- AlterTable
-ALTER TABLE "AssertionResult" ALTER COLUMN "responseId" DROP NOT NULL;
+ALTER TABLE "AssertionResult" ADD COLUMN     "actual" TEXT NOT NULL,
+ALTER COLUMN "responseId" DROP NOT NULL;
 
 -- AlterTable
 ALTER TABLE "CollectionRun" ALTER COLUMN "collectionId" DROP NOT NULL;

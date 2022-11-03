@@ -1,6 +1,6 @@
 import { GraphQLClient, gql } from "graphql-request";
 
-const endpoint = "http://localhost:3001/graphql";
+const endpoint = process.env.SERVER_URL;
 const graphQLClient = new GraphQLClient(endpoint);
 
 export const getCollectionData = async (collectionId) => {
@@ -26,13 +26,13 @@ export const getCollectionData = async (collectionId) => {
   `;
 
   const queryVariables = {
-      "where": {
-        "collectionId": {
-          "equals": collectionId
-        }
-      }
+    where: {
+      collectionId: {
+        equals: collectionId,
+      },
+    },
   };
 
   const data = await graphQLClient.request(query, queryVariables);
-  return data
+  return data;
 };
