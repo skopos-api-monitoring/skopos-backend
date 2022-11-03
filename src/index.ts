@@ -46,12 +46,34 @@ main().catch(console.error);
 
 app.post("/run-collection/:collectionId", async (req, res) => {
   const collectionId = Number(req.params.collectionId);
+
   if (!collectionId) {
-    res.sendStatus(400);
-  } else {
-    let collectionData = await getCollectionData(collectionId);
-    console.log(collectionData);
+    return res.status(404).json({ error: "no collection id" });
+  }
+
+  let collectionData;
+
+  try {
+    collectionData = await getCollectionData(collectionId);
+  } catch (e) {
+    console.log(e.message);
+    res
+      .status(400)
+      .json({ error: "fetching data for collectionId from server failed" })
+      .end();
+  }
+
+  console.log("collection data", collectionData);
+  try {
+    console.log(
+      "execution entering the try catch block for sending post request to collection runner"
+    );
     await axios.post(`${COLLECTION_RUNNER}/${collectionId}`, collectionData);
     res.sendStatus(200);
+  } catch (e) {
+    console.log(e.message);
+    res
+      .status(400)
+      .json({ error: `collection runner refused with error: ${e.message}` });
   }
 });

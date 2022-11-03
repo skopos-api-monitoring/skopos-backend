@@ -1,6 +1,6 @@
 import { GraphQLClient, gql } from "graphql-request";
 
-const endpoint = "http://ec2-18-206-161-83.compute-1.amazonaws.com/graphql";
+const endpoint = process.env.SERVER_URL;
 const graphQLClient = new GraphQLClient(endpoint);
 
 export const getCollectionData = async (collectionId) => {
