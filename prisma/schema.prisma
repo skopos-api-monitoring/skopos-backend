@@ -15,13 +15,12 @@ datasource db {
 }
 
 model Collection {
-  id            Int             @id @default(autoincrement())
+  id            Int                     @id @default(autoincrement())
   title         String
   requests      Request[]
-  createdAt     DateTime        @default(now())
+  createdAt     DateTime                @default(now())
   CollectionRun CollectionRun[]
-  monitorId     Int?
-  Monitor       Monitor? @relation(fields: [monitorId], references: [id])
+  Monitor       MonitorsOnCollections[]
 }
 
 model CollectionRun {
@@ -44,6 +43,7 @@ model Request {
   collectionId Int?
   Collection   Collection? @relation(fields: [collectionId], references: [id])
   assertions   Assertion[]
+  Response     Response[]
 }
 
 model Assertion {
@@ -83,10 +83,19 @@ model AssertionResult {
 }
 
 model Monitor {
-  id           Int         @id @default(autoincrement())
-  collectionId Int?
-  collection   Collection? @relation(fields: [collectionId], references: [id])
-  schedule     String
-  env          String
-  createdAt    DateTime    @default(now())
+  id          Int                     @id @default(autoincrement())
+  schedule    String
+  contactInfo String
+  createdAt   DateTime                @default(now())
+  Collections MonitorsOnCollections[]
+}
+
+model MonitorsOnCollections {
+  collection   Collection @relation(fields: [collectionId], references: [id])
+  collectionId Int
+  monitor      Monitor    @relation(fields: [monitorId], references: [id])
+  monitorId    Int
+  createdAt    DateTime   @default(now())
+
+  @@id([collectionId, monitorId])
 }
