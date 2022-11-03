@@ -6,5 +6,7 @@ services:
       context: .
     environment:
       DATABASE_URL: ${DATABASE_URL}
+      COLLECTION_RUNNER_URL: ${COLLECTION_RUNNER_URL}
+      PORT: ${PORT}
     ports:
       - "3001:3001"
