@@ -20,8 +20,7 @@ model Collection {
   requests      Request[]
   createdAt     DateTime        @default(now())
   CollectionRun CollectionRun[]
-  monitorId     Int?
-  Monitor       Monitor? @relation(fields: [monitorId], references: [id])
+  monitors      MonitorsOnCollections[]   
 }
 
 model CollectionRun {
@@ -87,17 +86,17 @@ model AssertionResult {
 
 model Monitor {
   id           Int        @id @default(autoincrement())
-  schedule     Schedule
-  contactInfo  Contact
+  schedule     String  
+  contactInfo  String
   createdAt    DateTime   @default(now())
-  Collections  Collection[]
+  Collections  MonitorsOnCollections[]?
 }
 
-model Schedule {
-  value String,
-  unit String
-}
-
-model Contact {
-  email String
+model MonitorsOnCollections {
+  collection    Collection @relation(fields: [collectionId], references: [id])
+  collectionId  Int
+  monitor       Monitor @relation(fields: [monitorId], references: [id])
+  monitorId     Int
+  createdAt     DateTime @default(now())
+  @@id([collectionId, monitorId])
 }
