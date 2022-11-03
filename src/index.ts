@@ -4,7 +4,8 @@ import { PrismaClient } from "@prisma/client";
 import { ApolloServer } from "apollo-server-express";
 import path from "path";
 import { buildSchema } from "type-graphql";
-import { resolvers } from "@generated/type-graphql";
+import { resolvers, applyResolversEnhanceMap } from "@generated/type-graphql";
+import { resolversEnhanceMap } from "./middleware/monitorMiddleware";
 import cors from "cors";
 import express from "express";
 import axios from "axios";
@@ -22,6 +23,8 @@ interface Context {
 
 const app = express();
 app.use(cors());
+applyResolversEnhanceMap(resolversEnhanceMap)
+
 async function main() {
   const schema = await buildSchema({
     resolvers,

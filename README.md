@@ -1,0 +1,5 @@
+Add to .env file:
+DATABASE_URL
+PORT
+EB_ARN
+EB_ROLE_ARN

@@ -20,7 +20,7 @@ model Collection {
   requests      Request[]
   createdAt     DateTime                @default(now())
   CollectionRun CollectionRun[]
-  Monitor       MonitorsOnCollections[]
+  monitors       Monitor[]
 }
 
 model CollectionRun {
@@ -87,15 +87,7 @@ model Monitor {
   schedule    String
   contactInfo String
   createdAt   DateTime                @default(now())
-  Collections MonitorsOnCollections[]
+  collections Collection[]
 }
 
-model MonitorsOnCollections {
-  collection   Collection @relation(fields: [collectionId], references: [id])
-  collectionId Int
-  monitor      Monitor    @relation(fields: [monitorId], references: [id])
-  monitorId    Int
-  createdAt    DateTime   @default(now())
 
-  @@id([collectionId, monitorId])
-}
