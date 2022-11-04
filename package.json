@@ -39,7 +39,7 @@
   "scripts": {
     "build": "tsc",
     "start": "tsc & node .",
-    "dev": "tsc & nodemon ."
+    "dev": "tsc & nodemon dist/index.js"
   },
   "repository": {
     "type": "git",

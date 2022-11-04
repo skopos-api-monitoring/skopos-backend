@@ -17,15 +17,16 @@ const PORT = process.env.PORT
 const COLLECTION_RUNNER = process.env.COLLECTION_RUNNER_URL
 
 console.log('collection runner', COLLECTION_RUNNER)
+
 interface Context {
   prisma: PrismaClient
 }
 
 const app = express()
 app.use(cors())
-applyResolversEnhanceMap(resolversEnhanceMap)
 
 async function main() {
+  applyResolversEnhanceMap(resolversEnhanceMap)
   const schema = await buildSchema({
     resolvers,
     emitSchemaFile: path.resolve(__dirname, 'schema.graphql'),
