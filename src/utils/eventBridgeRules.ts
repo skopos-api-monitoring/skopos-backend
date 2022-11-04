@@ -1,67 +1,52 @@
-var AWS = require('aws-sdk');
-AWS.config.update({region: 'us-east-1'});
+import {
+  PutTargetsCommand,
+  EventBridgeClient,
+  PutRuleCommand,
+  PutRuleCommandInput,
+  PutTargetsCommandInput,
+} from '@aws-sdk/client-eventbridge'
+
+const REGION = 'us-east-1'
+
+const ebClient = new EventBridgeClient({ region: REGION })
 
 export const addOrUpdateRule = (data, collectionIds) => {
-  const ebMonitor = new AWS.EventBridge({apiVersion: '2015-10-07'});
-  //take rule data and transform it to fit the syntax expected in params
-
-  var monitorParams = {
-    Name: 'default',
-    EventBusName: process.env.EB_ARN,
-    RoleArn: process.env.EB_ROLE_ARN,
-    ScheduleExpression: `rate(${data.schedule})`,
-    State: "ENABLED",
-    Tags: [
-      {
-        Key: 'email',
-        Value: data.contactInfo 
-      },
-    ]
-  };
-  
- // creates or updates rule
+  // creates or updates rule
   collectionIds.connect.forEach(async ({ id }) => {
-    monitorParams.Name = `${data.id}.${id}`
-
-    var apiParams = {
-      ConnectionArn: process.env.EB_ARN, /* required */
-      HttpMethod: "POST",  /* required */
-      InvocationEndpoint: `http://localhost:3001/run-collection/${id}`, /* required */
-      Name: `api endpoint for ${id}`, /* required */
-      InvocationRateLimitPerSecond: 1
-    };
-
-    var authParams = {
-      AuthParameters: { /* required */
-        ApiKeyAuthParameters: {
-          ApiKeyName: 'test', /* required */
-          ApiKeyValue: 'test' /* required */
+    const name = `${data.id}.${id}`
+    const monitorParams: PutRuleCommandInput = {
+      Name: name,
+      ScheduleExpression: `rate(${data.schedule})`,
+      State: 'ENABLED',
+      Tags: [
+        {
+          Key: 'email',
+          Value: data.contactInfo,
         },
-      },
-      AuthorizationType: "API_KEY", /* required */
-      Name: 'STRING_VALUE', /* required */
-    };
+      ],
+    }
+    const targetInput: PutTargetsCommandInput = {
+      Rule: name,
+      Targets: [
+        {
+          Id: name,
+          Arn: process.env.LAMBDA_ARN,
+          Input: JSON.stringify({
+            collectionId: id,
+            contactInfo: data.contactInfo,
+          }),
+        },
+      ],
+    }
 
-    await ebMonitor.createConnection(authParams, function(err, data) {
-      if (err) console.log(err, err.stack); // an error occurred
-      else     console.log(data);           // successful response
-    });
-
-    await ebMonitor.createApiDestination(apiParams, function(err, data) {
-      if (err) console.log(err, err.stack); // an error occurred
-      else     console.log(data);           // successful response
-    });
-
-    await ebMonitor.putRule(monitorParams, function(err, data) {
-      if (err) {
-        console.log("Error", err);
-      } else {
-        console.log("Success", data.RuleArn);
-      }
-    });
+    try {
+      await ebClient.send(new PutRuleCommand(monitorParams))
+      await ebClient.send(new PutTargetsCommand(targetInput))
+    } catch (e) {
+      console.log(e)
+    }
   })
 
-  
   // // deletes rule
   // ebMonitor.deleteRule(params, function(err, data) {
   //   if (err) {
@@ -71,6 +56,3 @@ export const addOrUpdateRule = (data, collectionIds) => {
   //   }
   // });
 }
-
-
-

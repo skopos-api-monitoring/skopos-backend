@@ -21,6 +21,5 @@ module.exports = {
         },
       ],
       ...require('eslint-config-prettier').rules,
-      ...require('eslint-config-prettier/@typescript-eslint').rules,
     },
   }
