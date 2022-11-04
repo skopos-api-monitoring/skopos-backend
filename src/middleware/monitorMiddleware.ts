@@ -3,10 +3,8 @@ import { ResolversEnhanceMap } from '@generated/type-graphql'
 import { addOrUpdateRule } from '../utils/eventBridgeRules'
 
 const AddSchedule: MiddlewareFn = async ({ args }, next) => {
-  const data = await next()
-  const collectionIds = args.data.collections
-  addOrUpdateRule(data, collectionIds)
-  return data
+  addOrUpdateRule(args.data)
+  return next()
 }
 
 export const resolversEnhanceMap: ResolversEnhanceMap = {
