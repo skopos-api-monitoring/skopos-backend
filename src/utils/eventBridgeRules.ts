@@ -12,7 +12,6 @@ const lambdaClient = new LambdaClient({ region: REGION })
 const ebClient = new EventBridgeClient({ region: REGION })
 
 export const addOrUpdateRule = (data) => {
-  // creates or updates rule
   data.collections.connect.forEach(async ({ id }) => {
     const name = `run-collection-${id}`
     const monitorParams: PutRuleCommandInput = {
@@ -53,13 +52,4 @@ export const addOrUpdateRule = (data) => {
       throw e
     }
   })
-
-  // // deletes rule
-  // ebMonitor.deleteRule(params, function(err, data) {
-  //   if (err) {
-  //     console.log("Error", err);
-  //   } else {
-  //     console.log("Success", data.RuleArn);
-  //   }
-  // });
 }

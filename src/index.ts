@@ -9,6 +9,7 @@ import { resolversEnhanceMap } from './middleware/monitorMiddleware'
 import cors from 'cors'
 import express from 'express'
 import axios from 'axios'
+import bodyParser from 'body-parser'
 import { getCollectionData } from './services/collectionServices'
 
 dotenv.config()
@@ -24,6 +25,7 @@ interface Context {
 
 const app = express()
 app.use(cors())
+app.use(express.json());
 
 async function main() {
   applyResolversEnhanceMap(resolversEnhanceMap)
@@ -55,6 +57,14 @@ app.post('/run-collection/:collectionId', async (req, res) => {
     return res.status(404).json({ error: 'no collection id' })
   }
 
+  let contactInfo
+
+  try {
+    contactInfo = req.body.contactInfo
+  } catch(err) {
+    console.log(`no contactInfo ${err}`)
+  }
+
   let collectionData
 
   try {
@@ -72,7 +82,7 @@ app.post('/run-collection/:collectionId', async (req, res) => {
     console.log(
       'execution entering the try catch block for sending post request to collection runner'
     )
-    await axios.post(`${COLLECTION_RUNNER}/${collectionId}`, collectionData)
+    await axios.post(`${COLLECTION_RUNNER}/${collectionId}`, { collectionData, contactInfo })
     res.sendStatus(200)
   } catch (e) {
     console.log(e.message)
