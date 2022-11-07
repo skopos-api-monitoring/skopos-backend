@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client'
+import { addRules, deleteRules, updateRules } from "../sdkModules/eventBridge/eventBridgeRules";
 import { MiddlewareFn, UseMiddleware } from 'type-graphql'
 import { ResolversEnhanceMap } from '@generated/type-graphql'
-import { addRules, deleteRules, updateRules } from "../utils/eventBridgeRules";
 
 const monitorCollectionIds = async (
   id: number,
