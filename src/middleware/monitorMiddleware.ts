@@ -10,11 +10,7 @@ const monitorCollectionIds = async (
   try {
     const collections = await prisma.collection.findMany({
       where: {
-        monitors: {
-          some: {
-            id,
-          },
-        },
+        monitorId: id,
       },
     })
     return collections.map((c) => c.id)
