@@ -13,3 +13,6 @@ export const getCollectionData = async (collectionId) => {
     },
   })
 }
+
+export const getSNSTopicARN = async (collectionId) => {
+}

@@ -7,9 +7,8 @@ import {
 } from '@aws-sdk/client-eventbridge'
 import { LambdaClient, AddPermissionCommandInput, AddPermissionCommand } from '@aws-sdk/client-lambda'
 
-const REGION = 'us-east-1'
-const lambdaClient = new LambdaClient({ region: REGION })
-const ebClient = new EventBridgeClient({ region: REGION })
+const lambdaClient = new LambdaClient({ region: process.env.AWS_REGION })
+const ebClient = new EventBridgeClient({ region: process.env.AWS_REGION })
 
 export const addOrUpdateRule = (data) => {
   data.collections.connect.forEach(async ({ id }) => {
@@ -27,7 +26,6 @@ export const addOrUpdateRule = (data) => {
           Arn: process.env.LAMBDA_ARN,
           Input: JSON.stringify({
             collectionId: id,
-            contactInfo: data.contactInfo,
           }),
         },
       ],
@@ -37,6 +35,7 @@ export const addOrUpdateRule = (data) => {
       const rule = await ebClient.send(new PutRuleCommand(monitorParams))
       await ebClient.send(new PutTargetsCommand(targetInput))
       const permissionInput: AddPermissionCommandInput = {
+        // rename this
         FunctionName: 'runScheduledCollection',
         Principal: 'events.amazonaws.com',
         Action: 'lambda:InvokeFunction',

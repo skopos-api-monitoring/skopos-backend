@@ -6,3 +6,4 @@ Setup after cloning repo:
   - PORT
   - COLLECTION_RUNNER_URL
   - LAMBDA_ARN
+  - AWS_REGION
