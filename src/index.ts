@@ -9,7 +9,6 @@ import { resolversEnhanceMap } from './middleware/monitorMiddleware'
 import cors from 'cors'
 import express from 'express'
 import axios from 'axios'
-import { getCollectionData } from './services/collectionServices'
 
 dotenv.config()
 
@@ -61,22 +60,11 @@ app.post('/run-collection/:collectionId', async (req, res) => {
   let collectionData
 
   try {
-    collectionData = await getCollectionData(collectionId)
-  } catch (e) {
-    console.log(e.message)
-    res
-      .status(400)
-      .json({ error: 'fetching data for collectionId from server failed' })
-      .end()
-  }
-
-  console.log('collection data', collectionData)
-  try {
     console.log(
       'execution entering the try catch block for sending post request to collection runner'
     )
     await axios.post(`${COLLECTION_RUNNER}/${collectionId}`, collectionData)
-    res.json({ok: true})
+    res.json({ ok: true })
   } catch (e) {
     console.log(e.message)
     res
