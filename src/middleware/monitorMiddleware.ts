@@ -1,5 +1,10 @@
 import { PrismaClient } from '@prisma/client'
-import { addRules, deleteRules, updateRules } from "../sdkModules/eventBridge/eventBridgeRules";
+import { GraphQLError } from 'graphql'
+import {
+  addRules,
+  deleteRules,
+  updateRules,
+} from '../sdkModules/eventBridge/eventBridgeRules'
 import { MiddlewareFn, UseMiddleware } from 'type-graphql'
 import { ResolversEnhanceMap } from '@generated/type-graphql'
 import { createTopic } from '../sdkModules/sns/createTopic'
@@ -51,11 +56,15 @@ const UpdateSchedule: MiddlewareFn<{ prisma: PrismaClient }> = async (
   { args, context },
   next
 ) => {
-  // const collectionIds = await monitorCollectionIds(args.where.id, context.prisma)
-  // if (await updateRules({ ...args.data, collectionIds })) {
-  //   return next()
-  // }
-  // throw new Error('failed to add collection run rules')
+  const collectionIds = await monitorCollectionIds(
+    args.where.id,
+    context.prisma
+  )
+  const schedule = args.data.schedule.set
+  if (await updateRules({ schedule, collectionIds })) {
+    return next()
+  }
+  throw new GraphQLError('failed to rule for collection run')
 }
 
 const DeleteSchedule: MiddlewareFn<{ prisma: PrismaClient }> = async (

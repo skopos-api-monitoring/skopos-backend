@@ -21,7 +21,7 @@ model Collection {
   createdAt     DateTime                @default(now())
   collectionRuns CollectionRun[]
   monitorId     Int?
-  monitor       Monitor? @relation(fields: [monitorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  monitor       Monitor? @relation(fields: [monitorId], references: [id], onDelete: SetNull)
 }
 
 model CollectionRun {

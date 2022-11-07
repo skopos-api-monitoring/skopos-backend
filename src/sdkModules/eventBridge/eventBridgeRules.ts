@@ -21,7 +21,6 @@ const ebClient = new EventBridgeClient({ region: REGION })
 
 interface RuleData {
   schedule: string
-  contactInfo: string
   collections: {
     connect: { id: number }[]
   }
@@ -52,7 +51,6 @@ export const addRules = async (data: RuleData) => {
           Arn: process.env.LAMBDA_ARN,
           Input: JSON.stringify({
             collectionId: id,
-            contactInfo: data.contactInfo,
           }),
         },
       ],
@@ -87,14 +85,12 @@ export const addRules = async (data: RuleData) => {
 export const updateRules = async ({
   collectionIds,
   schedule,
-  contactInfo,
 }: UpdateRuleData) => {
-  console.log('updateRules', collectionIds, schedule, contactInfo)
   const commands = collectionIds.map((collectionId) =>
     ebClient.send(
       new PutRuleCommand({
         Name: `run-collection-${collectionId}`,
-        ScheduleExpression: `rate(${schedule}`,
+        ScheduleExpression: `rate(${schedule})`,
       })
     )
   )
@@ -116,7 +112,6 @@ export const deleteRules = async (collectionIds: number[]) => {
   try {
     await Promise.all(
       collectionIds.flatMap((id) => {
-        // InvokeFunction-run-collection-1
         const name = `run-collection-${id}`
         return [
           lambdaClient.send(
