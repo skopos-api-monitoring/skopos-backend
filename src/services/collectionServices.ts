@@ -1,18 +1,15 @@
-import { PrismaClient } from '@prisma/client'
-const prismaClient = new PrismaClient()
+// import { PrismaClient } from '@prisma/client'
+// const prismaClient = new PrismaClient()
 
-export const getCollectionData = async (collectionId) => {
-  return prismaClient.request.findMany({
-    where: {
-      collectionId: {
-        equals: collectionId,
-      },
-    },
-    include: {
-      assertions: true,
-    },
-  })
-}
-
-export const getSNSTopicARN = async (collectionId) => {
-}
+// export const getCollectionData = async (collectionId) => {
+//   return prismaClient.request.findMany({
+//     where: {
+//       collectionId: {
+//         equals: collectionId,
+//       },
+//     },
+//     include: {
+//       assertions: true,
+//     },
+//   })
+// }

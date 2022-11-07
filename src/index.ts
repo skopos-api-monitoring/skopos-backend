@@ -9,8 +9,7 @@ import { resolversEnhanceMap } from './middleware/monitorMiddleware'
 import cors from 'cors'
 import express from 'express'
 import axios from 'axios'
-import bodyParser from 'body-parser'
-import { getCollectionData } from './services/collectionServices'
+// import { getCollectionData, getSNSTopicARN } from './services/collectionServices'
 
 dotenv.config()
 
@@ -57,32 +56,11 @@ app.post('/run-collection/:collectionId', async (req, res) => {
     return res.status(404).json({ error: 'no collection id' })
   }
 
-  let contactInfo
-
-  try {
-    contactInfo = req.body.contactInfo
-  } catch(err) {
-    console.log(`no contactInfo ${err}`)
-  }
-
-  let collectionData
-
-  try {
-    collectionData = await getCollectionData(collectionId)
-  } catch (e) {
-    console.log(e.message)
-    res
-      .status(400)
-      .json({ error: 'fetching data for collectionId from server failed' })
-      .end()
-  }
-
-  console.log('collection data', collectionData)
   try {
     console.log(
       'execution entering the try catch block for sending post request to collection runner'
     )
-    await axios.post(`${COLLECTION_RUNNER}/${collectionId}`, { collectionData, contactInfo })
+    await axios.post(`${COLLECTION_RUNNER}/${collectionId}`)
     res.sendStatus(200)
   } catch (e) {
     console.log(e.message)
