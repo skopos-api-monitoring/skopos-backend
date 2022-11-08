@@ -82,7 +82,7 @@ CREATE TABLE "Monitor" (
 );
 
 -- AddForeignKey
-ALTER TABLE "Collection" ADD CONSTRAINT "Collection_monitorId_fkey" FOREIGN KEY ("monitorId") REFERENCES "Monitor"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Collection" ADD CONSTRAINT "Collection_monitorId_fkey" FOREIGN KEY ("monitorId") REFERENCES "Monitor"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "CollectionRun" ADD CONSTRAINT "CollectionRun_collectionId_fkey" FOREIGN KEY ("collectionId") REFERENCES "Collection"("id") ON DELETE CASCADE ON UPDATE CASCADE;
