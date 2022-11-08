@@ -21,6 +21,7 @@ const ebClient = new EventBridgeClient({ region: REGION })
 
 interface RuleData {
   schedule: string
+  contactInfo?: string
   collections: {
     connect: { id: number }[]
   }

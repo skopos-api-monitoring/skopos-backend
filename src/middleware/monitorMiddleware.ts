@@ -31,15 +31,14 @@ const monitorCollectionIds = async (
 const monitorSnsTopicArn = async (
   monitorId: number,
   prisma: PrismaClient
-): Promise<string> => {
+): Promise<any> => {
   try {
     const monitor = await prisma.monitor.findUnique({
       where: {
         id: monitorId,
       }
     })
-    console.log(monitor)
-    return monitor[0]['snsTopicArn']
+    return monitor['snsTopicArn']
   } catch (err) {
     return ''
   }
@@ -60,6 +59,11 @@ const UpdateSchedule: MiddlewareFn<{ prisma: PrismaClient }> = async (
     args.where.id,
     context.prisma
   )
+
+  if (!args.data.schedule) {
+    return next()
+  }
+
   const schedule = args.data.schedule.set
   if (await updateRules({ schedule, collectionIds })) {
     return next()
@@ -131,9 +135,10 @@ const UpdateSubscription: MiddlewareFn<{ prisma: PrismaClient }> = async (
     args.where.id,
     context.prisma
   )
+
   try {
     const data = await updateSubscription(topicArn, args.data.contactInfo)
-    console.log('topic delete success', data)
+    console.log('update subscription success', data)
     return data
   } catch(err) {
     throw new Error('Failed to remove topic')
