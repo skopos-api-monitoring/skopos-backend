@@ -131,6 +131,8 @@ const UpdateSubscription: MiddlewareFn<{ prisma: PrismaClient }> = async (
   { args, context },
   next
 ) => {
+  if (!args.data.contactInfo) { return next() }
+
   const topicArn = await monitorSnsTopicArn(
     args.where.id,
     context.prisma
