@@ -20,7 +20,8 @@ model Collection {
   requests      Request[]
   createdAt     DateTime                @default(now())
   collectionRuns CollectionRun[]
-  monitors       Monitor[]
+  monitorId     Int?
+  monitor       Monitor? @relation(fields: [monitorId], references: [id], onDelete: SetNull)
 }
 
 model CollectionRun {
@@ -88,6 +89,7 @@ model Monitor {
   contactInfo String
   createdAt   DateTime                @default(now())
   collections Collection[]
+  snsTopicArn String?
 }
 
 

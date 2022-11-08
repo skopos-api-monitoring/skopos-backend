@@ -9,7 +9,6 @@ import { resolversEnhanceMap } from './middleware/monitorMiddleware'
 import cors from 'cors'
 import express from 'express'
 import axios from 'axios'
-import { getCollectionData } from './services/collectionServices'
 
 dotenv.config()
 
@@ -18,7 +17,7 @@ const COLLECTION_RUNNER = process.env.COLLECTION_RUNNER_URL
 
 console.log('collection runner', COLLECTION_RUNNER)
 
-interface Context {
+export interface Context {
   prisma: PrismaClient
 }
 
@@ -48,7 +47,10 @@ async function main() {
 
 main().catch(console.error)
 
+app.get('/health', (req, res) => res.json({ok: true}))
+
 app.post('/run-collection/:collectionId', async (req, res) => {
+  console.log('run collection')
   const collectionId = Number(req.params.collectionId)
 
   if (!collectionId) {
@@ -58,22 +60,11 @@ app.post('/run-collection/:collectionId', async (req, res) => {
   let collectionData
 
   try {
-    collectionData = await getCollectionData(collectionId)
-  } catch (e) {
-    console.log(e.message)
-    res
-      .status(400)
-      .json({ error: 'fetching data for collectionId from server failed' })
-      .end()
-  }
-
-  console.log('collection data', collectionData)
-  try {
     console.log(
       'execution entering the try catch block for sending post request to collection runner'
     )
     await axios.post(`${COLLECTION_RUNNER}/${collectionId}`, collectionData)
-    res.sendStatus(200)
+    res.json({ ok: true })
   } catch (e) {
     console.log(e.message)
     res
