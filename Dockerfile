@@ -3,15 +3,14 @@ RUN apk update
 
 WORKDIR /home/backend-skopos
 
-COPY package.json .
-
+COPY . .
 RUN npm install
 
-COPY . . 
+
 RUN npx prisma migrate deploy 
 RUN npx prisma generate
 RUN npm run build 
 
 EXPOSE 3001
 
-CMD ["node", "dist/index.js"]
+CMD ["npm", "start"]

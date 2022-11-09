@@ -30,7 +30,7 @@ async function main() {
   applyResolversEnhanceMap(resolversEnhanceMap);
   const schema = await buildSchema({
     resolvers,
-    emitSchemaFile: path.resolve(__dirname, "schema.graphql"),
+    // emitSchemaFile: path.resolve(__dirname, "schema.graphql"),
   });
 
   console.log("attempting to connect prisma");
@@ -52,11 +52,7 @@ async function main() {
   );
 }
 
-try {
-  main();
-} catch (e) {
-  console.log(e);
-}
+main().catch(e => console.log(e))
 
 app.get("/health", (req, res) => res.json({ ok: true }));
 
