@@ -1,5 +1,5 @@
-FROM node:18-alpine
-RUN apk update 
+FROM node:16-bullseye
+RUN apt-get update 
 
 WORKDIR /home/backend-skopos
 
@@ -8,10 +8,10 @@ COPY package.json .
 RUN npm install
 
 COPY . . 
-RUN npx prisma migrate deploy 
-RUN npx prisma generate
+
 RUN npm run build 
 
 EXPOSE 3001
+EXPOSE 5432
 
-CMD ["node", "dist/index.js"]
+CMD npx prisma migrate dev --name "deploy"; node dist/index.js
