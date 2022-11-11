@@ -61,7 +61,7 @@ export const addRules = async (data: RuleData) => {
       const rule = await ebClient.send(new PutRuleCommand(monitorParams))
       await ebClient.send(new PutTargetsCommand(targetInput))
       const permissionInput: AddPermissionCommandInput = {
-        FunctionName: 'make-post-request-to-run-collection',
+        FunctionName: 'call-collection-runner',
         Principal: 'events.amazonaws.com',
         Action: 'lambda:InvokeFunction',
         SourceArn: rule.RuleArn,

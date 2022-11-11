@@ -45,6 +45,8 @@
   },
   "scripts": {
     "build": "tsc",
+    "db:deploy": "prisma migrate deploy",
+    "deploy": "npm run db:deploy && npm start",
     "start": "tsc & node .",
     "dev": "tsc & nodemon .",
     "test": "jest --watch"
