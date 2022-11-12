@@ -1,20 +1,22 @@
-FROM node:16-bullseye
+FROM node:16-alpine as ts-builder
 
-WORKDIR /home/backend-skopos
+WORKDIR /home/backend_skopos
 
+COPY . ./
 
-COPY package*.json ./
-
-ENV PRISMA_SKIP_POSTINSTALL_GENERATE=true
-
-RUN npm install #--loglevel verbose
-
-COPY . .
-
-RUN npx prisma generate
+RUN npm run clean
 RUN npm run build 
 
 
+FROM node:16-alpine as ts-prod
+WORKDIR /home/backend_skopos
+
+COPY --from=ts-builder ./home/backend_skopos/dist ./dist
+COPY --from=ts-builder ./home/backend_skopos/prisma ./prisma
+COPY package* ./
+
+RUN npm install --production
+
 EXPOSE 3001
 
-CMD ["npm", "run", "deploy"]
+CMD npx prisma migrate deploy; node ./dist/index.js
