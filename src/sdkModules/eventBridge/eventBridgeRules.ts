@@ -61,7 +61,7 @@ export const addRules = async (data: RuleData) => {
       const rule = await ebClient.send(new PutRuleCommand(monitorParams))
       await ebClient.send(new PutTargetsCommand(targetInput))
       const permissionInput: AddPermissionCommandInput = {
-        FunctionName: 'call-collection-runner',
+        FunctionName: process.env.LAMBDA_FUNCTION_NAME,
         Principal: 'events.amazonaws.com',
         Action: 'lambda:InvokeFunction',
         SourceArn: rule.RuleArn,
@@ -117,7 +117,7 @@ export const deleteRules = async (collectionIds: number[]) => {
         return [
           lambdaClient.send(
             new RemovePermissionCommand({
-              FunctionName: `make-post-request-to-run-collection`,
+              FunctionName: process.env.LAMBDA_FUNCTION_NAME,
               StatementId: `InvokeFunction-${name}`,
             })
           ),
