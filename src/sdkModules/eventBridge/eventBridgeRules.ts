@@ -70,7 +70,6 @@ export const addRules = async (data: RuleData) => {
       const permission = await lambdaClient.send(
         new AddPermissionCommand(permissionInput)
       )
-      console.log(permission.Statement)
     } catch (e) {
       if (e.name === 'ResourceConflictException') {
         console.log('permission already exists')
@@ -117,7 +116,7 @@ export const deleteRules = async (collectionIds: number[]) => {
         return [
           lambdaClient.send(
             new RemovePermissionCommand({
-              FunctionName: `make-post-request-to-run-collection`,
+              FunctionName: `call-collection-runner`,
               StatementId: `InvokeFunction-${name}`,
             })
           ),
