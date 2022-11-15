@@ -74,7 +74,7 @@ CREATE TABLE "AssertionResult" (
 CREATE TABLE "Monitor" (
     "id" SERIAL NOT NULL,
     "schedule" TEXT NOT NULL,
-    "contactInfo" TEXT NOT NULL,
+    "contactInfo" JSONB,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "snsTopicArn" TEXT,
 
