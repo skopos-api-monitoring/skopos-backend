@@ -87,7 +87,7 @@ model AssertionResult {
 model Monitor {
   id          Int                     @id @default(autoincrement())
   schedule    String
-  contactInfo String
+  contactInfo Json?
   createdAt   DateTime                @default(now())
   collections Collection[]
   snsTopicArn String?
