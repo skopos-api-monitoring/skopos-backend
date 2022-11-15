@@ -1,9 +1,13 @@
 import { CreateTopicCommand } from "@aws-sdk/client-sns";
 import { snsClient } from './snsClient.js'
 
-export const createTopic = async ({ contactInfo }) => {
-  const params = {
-    Name: contactInfo.split('@')[0],
+interface Params {
+  Name: any
+}
+
+export const createTopic = async ({ contactInfo }) => { // contactInfo: "test@test.com" contactInfo: { email: "", pagerDuty: "", slack: ""}
+  const params: Params = {
+    Name: Object.values(contactInfo)[0],
   }
 
   try {

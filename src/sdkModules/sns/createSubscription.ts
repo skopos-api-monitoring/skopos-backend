@@ -33,14 +33,4 @@ export const createSubscription = async (contactInfo, topicArn) => {
 
     await addSub(pagerDutyParams)
   }
-
-  if (contactInfo.slackParams) {
-    const slackParams = {
-      Protocol: 'AWS Lambda',
-      TopicArn: topicArn,
-      Endpoint: process.env.SLACK_LAMBDA_ARN,
-    }
-
-    await addSub(slackParams)
-  }
 }

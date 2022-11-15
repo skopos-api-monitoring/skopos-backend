@@ -89,6 +89,8 @@ const DeleteSchedule: MiddlewareFn<{ prisma: PrismaClient }> = async (
 }
 
 const AddSNS: MiddlewareFn = async ({ args }, next) => {
+  if (!args.data.contactInfo) { return next() }
+
   let snsTopicArn
 
   try {
@@ -112,6 +114,8 @@ const DeleteTopic: MiddlewareFn<{ prisma: PrismaClient }> = async (
   { args, context },
   next
 ) => {
+  if (!args.data.contactInfo) { return next() }
+
   const topicArn = await monitorSnsTopicArn(
     args.where.id,
     context.prisma
