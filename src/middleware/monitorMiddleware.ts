@@ -9,8 +9,8 @@ import { MiddlewareFn, UseMiddleware } from 'type-graphql'
 import { ResolversEnhanceMap } from '@generated/type-graphql'
 import { createTopic } from '../sdkModules/sns/createTopic'
 import { deleteTopic } from '../sdkModules/sns/deleteTopic'
-import { createSubscription } from '../sdkModules/sns/createSubscription';
-import { updateSubscription } from '../sdkModules/sns/updateSubscription';
+import { createSubscription } from '../sdkModules/sns/createSubscription'
+import { updateSubscription } from '../sdkModules/sns/updateSubscription'
 
 const monitorCollectionIds = async (
   id: number,
@@ -36,7 +36,7 @@ const monitorSnsTopicArn = async (
     const monitor = await prisma.monitor.findUnique({
       where: {
         id: monitorId,
-      }
+      },
     })
     return monitor['snsTopicArn']
   } catch (err) {
@@ -89,7 +89,9 @@ const DeleteSchedule: MiddlewareFn<{ prisma: PrismaClient }> = async (
 }
 
 const AddSNS: MiddlewareFn = async ({ args }, next) => {
-  if (!args.data.contactInfo) { return next() }
+  if (!args.data.contactInfo) {
+    return next()
+  }
 
   let snsTopicArn
 
@@ -99,7 +101,6 @@ const AddSNS: MiddlewareFn = async ({ args }, next) => {
   } catch (err) {
     throw new Error(err.message)
   }
-
   try {
     console.log(snsTopicArn)
     await createSubscription(args.data.contactInfo, snsTopicArn)
@@ -114,18 +115,18 @@ const DeleteTopic: MiddlewareFn<{ prisma: PrismaClient }> = async (
   { args, context },
   next
 ) => {
-  const topicArn = await monitorSnsTopicArn(
-    args.where.id,
-    context.prisma
-  )
-  
-  if (!topicArn) { return next() }
+  console.log('Delete Topic')
+  const topicArn = await monitorSnsTopicArn(args.where.id, context.prisma)
+
+  if (!topicArn) {
+    return next()
+  }
 
   try {
     console.log(topicArn)
     const data = await deleteTopic(topicArn)
     console.log('topic delete success', data)
-  } catch(err) {
+  } catch (err) {
     throw new Error('Failed to remove topic')
   }
   return next()
@@ -135,19 +136,20 @@ const UpdateSubscription: MiddlewareFn<{ prisma: PrismaClient }> = async (
   { args, context },
   next
 ) => {
-  if (!args.data.contactInfo) { return next()}
+  if (!args.data.contactInfo) {
+    return next()
+  }
 
-  const topicArn = await monitorSnsTopicArn(
-    args.where.id,
-    context.prisma
-  )
+  const topicArn = await monitorSnsTopicArn(args.where.id, context.prisma)
 
-  if (!topicArn) { return next() }
+  if (!topicArn) {
+    return next()
+  }
 
   try {
     const data = await updateSubscription(topicArn, args.data.contactInfo)
     console.log('update subscription success', data)
-  } catch(err) {
+  } catch (err) {
     throw new Error('Failed to remove topic')
   }
   return next()
@@ -156,7 +158,13 @@ const UpdateSubscription: MiddlewareFn<{ prisma: PrismaClient }> = async (
 export const resolversEnhanceMap: ResolversEnhanceMap = {
   Monitor: {
     createOneMonitor: [UseMiddleware(AddSchedule), UseMiddleware(AddSNS)],
-    deleteOneMonitor: [UseMiddleware(DeleteSchedule), UseMiddleware(DeleteTopic)],
-    updateOneMonitor: [UseMiddleware(UpdateSchedule), UseMiddleware(UpdateSubscription)],
+    deleteOneMonitor: [
+      UseMiddleware(DeleteSchedule),
+      UseMiddleware(DeleteTopic),
+    ],
+    updateOneMonitor: [
+      UseMiddleware(UpdateSchedule),
+      UseMiddleware(UpdateSubscription),
+    ],
   },
 }

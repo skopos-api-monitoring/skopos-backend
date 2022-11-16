@@ -1,6 +1,5 @@
 import { CreateTopicCommand } from "@aws-sdk/client-sns";
-import { UUID } from "graphql-scalars/typings/mocks";
-import { snsClient } from './snsClient.js'
+import { snsClient } from './snsClient'
 import { v4 as uuidv4 } from 'uuid'
 
 interface Params {
@@ -9,7 +8,7 @@ interface Params {
 
 export const createTopic = async ({ contactInfo }) => { // contactInfo: "test@test.com" contactInfo: { email: "", pagerDuty: "", slack: ""}
   const params: Params = {
-    Name: `skopos-${uuidv4}`, // test@test.com
+    Name: `skopos-${uuidv4()}`, // test@test.com
   }
 
   try {

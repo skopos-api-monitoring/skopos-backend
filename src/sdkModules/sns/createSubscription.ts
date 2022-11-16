@@ -1,5 +1,5 @@
 import { SubscribeCommand } from "@aws-sdk/client-sns"
-import { snsClient } from "./snsClient.js"
+import { snsClient } from "./snsClient"
 
 const addSub = async (params) => {
   try {

@@ -1,6 +1,6 @@
 import { UnsubscribeCommand } from "@aws-sdk/client-sns";
-import { snsClient } from "./snsClient.js";
-import { createSubscription } from "./createSubscription.js";
+import { snsClient } from "./snsClient";
+import { createSubscription } from "./createSubscription";
 import { ListSubscriptionsByTopicCommand } from "@aws-sdk/client-sns";
 
 const getSubscribers = async (topicArn) => {
@@ -18,10 +18,10 @@ const deleteSubscriber = async (subscriberArn) => {
   const params = { SubscriptionArn: subscriberArn }
   try {
     const data = await snsClient.send(new UnsubscribeCommand(params));
-    console.log("Success.", data);
+    console.log('Success.', data)
     return data
   } catch (err) {
-    console.log("Error", err.stack);
+    console.log('Error', err.stack)
   }
 };
 

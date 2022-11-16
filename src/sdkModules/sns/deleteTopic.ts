@@ -1,5 +1,5 @@
 import { DeleteTopicCommand } from '@aws-sdk/client-sns'
-import { snsClient } from './snsClient.js'
+import { snsClient } from './snsClient'
 
 export const deleteTopic = async (snsTopicArn) => {
   const params = { TopicArn: snsTopicArn }
