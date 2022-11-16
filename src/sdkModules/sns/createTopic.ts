@@ -7,7 +7,7 @@ interface Params {
 
 export const createTopic = async ({ contactInfo }) => { // contactInfo: "test@test.com" contactInfo: { email: "", pagerDuty: "", slack: ""}
   const params: Params = {
-    Name: Object.values(contactInfo)[0],
+    Name: Object.keys(contactInfo)[0],
   }
 
   try {

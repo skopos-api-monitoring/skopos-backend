@@ -114,12 +114,13 @@ const DeleteTopic: MiddlewareFn<{ prisma: PrismaClient }> = async (
   { args, context },
   next
 ) => {
-  if (!args.data.contactInfo) { return next() }
-
   const topicArn = await monitorSnsTopicArn(
     args.where.id,
     context.prisma
   )
+  
+  if (!topicArn) { return next() }
+
   try {
     console.log(topicArn)
     const data = await deleteTopic(topicArn)
