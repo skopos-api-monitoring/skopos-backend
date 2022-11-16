@@ -8,7 +8,7 @@ const getSubscribers = async (topicArn) => {
   try {
     const data = await snsClient.send(new ListSubscriptionsByTopicCommand(params));
     console.log("Successfully got subscribers.",  data);
-    return data.Subscriptions[0].SubscriptionArn
+    return data.Subscriptions.map(sub => sub.SubscriptionArn) // [{}, {}]
   } catch (err) {
     console.log("Error", err.stack);
   }
@@ -25,12 +25,14 @@ const deleteSubscriber = async (subscriberArn) => {
   }
 };
 
-export const updateSubscription = async (topicArn, email) => {
-  const subscriber = await getSubscribers(topicArn)
-  if (subscriber !== 'PendingConfirmation') {
-    await deleteSubscriber(subscriber)
+export const updateSubscription = async (topicArn, contactInfo) => {
+  const subscribers = await getSubscribers(topicArn)
+  for (const sub of subscribers) {
+    if (sub !== 'PendingConfirmation') {
+      await deleteSubscriber(sub)
+    }
   }
 
-  console.log('new data', email)
-  await createSubscription(email.set, topicArn)
+  // create a subscription for each value in the contactInfo
+  await createSubscription(contactInfo, topicArn)
 }

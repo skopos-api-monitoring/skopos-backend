@@ -125,7 +125,6 @@ const DeleteTopic: MiddlewareFn<{ prisma: PrismaClient }> = async (
     console.log(topicArn)
     const data = await deleteTopic(topicArn)
     console.log('topic delete success', data)
-    return data
   } catch(err) {
     throw new Error('Failed to remove topic')
   }
@@ -136,17 +135,18 @@ const UpdateSubscription: MiddlewareFn<{ prisma: PrismaClient }> = async (
   { args, context },
   next
 ) => {
-  if (!args.data.contactInfo) { return next() }
+  if (!args.data.contactInfo) { return next()}
 
   const topicArn = await monitorSnsTopicArn(
     args.where.id,
     context.prisma
   )
 
+  if (!topicArn) { return next() }
+
   try {
     const data = await updateSubscription(topicArn, args.data.contactInfo)
     console.log('update subscription success', data)
-    return data
   } catch(err) {
     throw new Error('Failed to remove topic')
   }
