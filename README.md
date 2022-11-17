@@ -4,6 +4,6 @@ Setup after cloning repo:
 3. Add to `.env` file:
   - DATABASE_URL
   - PORT
-  - COLLECTION_RUNNER_URL
   - LAMBDA_ARN
+  - LAMBDA_NAME
   - AWS_REGION

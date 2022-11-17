@@ -47,7 +47,7 @@
     "build": "tsc",
     "db:deploy": "npx prisma migrate deploy",
     "deploy": "npm run db:deploy && npm start",
-    "start": "node dist/index.js",
+    "start": "NODE_ENV=production node dist/index.js",
     "dev": "ts-node-dev src/index.ts",
     "test": "jest --watch"
   },

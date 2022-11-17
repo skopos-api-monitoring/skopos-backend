@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import { GraphQLError } from 'graphql'
+import toggleEnabled from "../sdkModules/eventBridge/toggleEnabled";
 import {
   addRules,
   deleteRules,
@@ -59,6 +60,10 @@ const UpdateSchedule: MiddlewareFn<{ prisma: PrismaClient }> = async (
     args.where.id,
     context.prisma
   )
+
+  if (args.data.enabled) {
+    await toggleEnabled(collectionIds, args.data.enabled.set)
+  }
 
   if (!args.data.schedule) {
     return next()

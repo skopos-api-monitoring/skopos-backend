@@ -2,3 +2,5 @@
 .env
 node_modules/
 dist/
+.idea
+.tool-versions

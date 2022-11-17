@@ -1,6 +1,5 @@
 import {
   DeleteRuleCommand,
-  EventBridgeClient,
   PutRuleCommand,
   PutRuleCommandInput,
   PutTargetsCommand,
@@ -11,13 +10,11 @@ import {
   AddPermissionCommand,
   AddPermissionCommandInput,
   RemovePermissionCommand,
-  LambdaClient,
 } from '@aws-sdk/client-lambda'
 import { GraphQLError } from 'graphql'
+import ebClient from "../eventBridge/ebClient";
+import lambdaClient from "../eventBridge/lambdaClient";
 
-const REGION = 'us-east-1'
-const lambdaClient = new LambdaClient({ region: REGION })
-const ebClient = new EventBridgeClient({ region: REGION })
 
 interface RuleData {
   schedule: string

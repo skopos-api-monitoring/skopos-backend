@@ -91,6 +91,7 @@ model Monitor {
   createdAt   DateTime                @default(now())
   collections Collection[]
   snsTopicArn String?
+  enabled Boolean @default(true)
 }
 
 
