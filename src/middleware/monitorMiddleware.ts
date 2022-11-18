@@ -101,7 +101,7 @@ const AddSNS: MiddlewareFn = async ({ args }, next) => {
   let snsTopicArn
 
   try {
-    snsTopicArn = await createTopic(args.data)
+    snsTopicArn = await createTopic()
     args.data.snsTopicArn = snsTopicArn
   } catch (err) {
     throw new Error(err.message)
