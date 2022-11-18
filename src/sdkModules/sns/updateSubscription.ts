@@ -1,29 +1,31 @@
-import { UnsubscribeCommand } from "@aws-sdk/client-sns";
-import { snsClient } from "./snsClient";
-import { createSubscription } from "./createSubscription";
-import { ListSubscriptionsByTopicCommand } from "@aws-sdk/client-sns";
+import { UnsubscribeCommand } from '@aws-sdk/client-sns'
+import { snsClient } from './snsClient'
+import { createSubscription } from './createSubscription'
+import { ListSubscriptionsByTopicCommand } from '@aws-sdk/client-sns'
 
 const getSubscribers = async (topicArn) => {
   const params = { TopicArn: topicArn }
   try {
-    const data = await snsClient.send(new ListSubscriptionsByTopicCommand(params));
-    console.log("Successfully got subscribers.",  data);
-    return data.Subscriptions.map(sub => sub.SubscriptionArn) // [{}, {}]
+    const data = await snsClient.send(
+      new ListSubscriptionsByTopicCommand(params)
+    )
+    console.log('Successfully got subscribers.', data)
+    return data.Subscriptions.map((sub) => sub.SubscriptionArn) // [{}, {}]
   } catch (err) {
-    console.log("Error", err.stack);
+    console.log('Error', err.stack)
   }
-};
+}
 
 const deleteSubscriber = async (subscriberArn) => {
   const params = { SubscriptionArn: subscriberArn }
   try {
-    const data = await snsClient.send(new UnsubscribeCommand(params));
+    const data = await snsClient.send(new UnsubscribeCommand(params))
     console.log('Success.', data)
     return data
   } catch (err) {
     console.log('Error', err.stack)
   }
-};
+}
 
 export const updateSubscription = async (topicArn, contactInfo) => {
   const subscribers = await getSubscribers(topicArn)

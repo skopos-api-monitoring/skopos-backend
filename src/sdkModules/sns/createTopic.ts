@@ -1,13 +1,10 @@
-import { CreateTopicCommand } from "@aws-sdk/client-sns";
+import { CreateTopicCommand, CreateTopicCommandInput } from "@aws-sdk/client-sns";
 import { snsClient } from './snsClient'
 import { v4 as uuidv4 } from 'uuid'
 
-interface Params {
-  Name: any
-}
-
-export const createTopic = async ({ contactInfo }) => { // contactInfo: "test@test.com" contactInfo: { email: "", pagerDuty: "", slack: ""}
-  const params: Params = {
+export const createTopic = async () => {
+  // contactInfo: "test@test.com" contactInfo: { email: "", pagerDuty: "", slack: ""}
+  const params: CreateTopicCommandInput = {
     Name: `skopos-${uuidv4()}`, // test@test.com
   }
 
