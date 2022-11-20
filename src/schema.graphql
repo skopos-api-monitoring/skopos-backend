@@ -1437,6 +1437,11 @@ input DateTimeWithAggregatesFilter {
   notIn: [DateTime!]
 }
 
+input DeleteRequestInput {
+  collectionId: Float!
+  requestId: Float!
+}
+
 input IntFieldUpdateOperationsInput {
   decrement: Int
   divide: Int
@@ -1843,6 +1848,8 @@ type Mutation {
   deleteOneMonitor(where: MonitorWhereUniqueInput!): Monitor
   deleteOneRequest(where: RequestWhereUniqueInput!): Request
   deleteOneResponse(where: ResponseWhereUniqueInput!): Response
+  deleteRequest(data: DeleteRequestInput!): [Request!]
+  reorderRequests(data: ReorderRequestInput!): [Request!]
   updateManyAssertion(data: AssertionUpdateManyMutationInput!, where: AssertionWhereInput): AffectedRowsOutput!
   updateManyAssertionResult(data: AssertionResultUpdateManyMutationInput!, where: AssertionResultWhereInput): AffectedRowsOutput!
   updateManyCollection(data: CollectionUpdateManyMutationInput!, where: CollectionWhereInput): AffectedRowsOutput!
@@ -2119,6 +2126,12 @@ type Query {
 enum QueryMode {
   default
   insensitive
+}
+
+input ReorderRequestInput {
+  collectionId: Float!
+  fromStep: Float!
+  toStep: Float!
 }
 
 type Request {

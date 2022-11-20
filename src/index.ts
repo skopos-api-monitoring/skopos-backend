@@ -3,12 +3,12 @@ import 'reflect-metadata'
 import { PrismaClient } from '@prisma/client'
 import { ApolloServer } from 'apollo-server-express'
 import path from 'path'
+import CustomCollectionResolver from './resolvers/CustomCollectionResolver'
 import { buildSchema, BuildSchemaOptions } from 'type-graphql'
 import { resolvers, applyResolversEnhanceMap } from '@generated/type-graphql'
 import { resolversEnhanceMap } from './middleware/monitorMiddleware'
 import cors from 'cors'
 import express from 'express'
-import axios from 'axios'
 
 dotenv.config()
 
@@ -28,9 +28,10 @@ console.log('port', process.env.PORT)
 async function main() {
   applyResolversEnhanceMap(resolversEnhanceMap)
   const schemaOptions: BuildSchemaOptions = {
-    resolvers,
+    resolvers: [...resolvers, CustomCollectionResolver],
   }
   if (process.env.NODE_ENV !== 'production') {
+    console.log('emitting schema file')
     Object.assign(schemaOptions, {
       emitSchemaFile: path.resolve(__dirname, 'schema.graphql'),
     })
