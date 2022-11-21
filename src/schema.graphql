@@ -983,8 +983,8 @@ input CollectionRelationFilter {
 
 type CollectionRun {
   _count: CollectionRunCount
-  collection: Collection
-  collectionId: Int
+  collection: Collection!
+  collectionId: Int!
   createdAt: DateTime!
   id: Int!
   responses(cursor: ResponseWhereUniqueInput, distinct: [ResponseScalarFieldEnum!], orderBy: [ResponseOrderByWithRelationInput!], skip: Int, take: Int, where: ResponseWhereInput): [Response!]!
@@ -1018,7 +1018,7 @@ input CollectionRunCountOrderByAggregateInput {
 }
 
 input CollectionRunCreateInput {
-  collection: CollectionCreateNestedOneWithoutCollectionRunsInput
+  collection: CollectionCreateNestedOneWithoutCollectionRunsInput!
   createdAt: DateTime
   responses: ResponseCreateNestedManyWithoutCollectionRunInput
 }
@@ -1034,7 +1034,7 @@ input CollectionRunCreateManyCollectionInputEnvelope {
 }
 
 input CollectionRunCreateManyInput {
-  collectionId: Int
+  collectionId: Int!
   createdAt: DateTime
   id: Int
 }
@@ -1068,7 +1068,7 @@ input CollectionRunCreateWithoutCollectionInput {
 }
 
 input CollectionRunCreateWithoutResponsesInput {
-  collection: CollectionCreateNestedOneWithoutCollectionRunsInput
+  collection: CollectionCreateNestedOneWithoutCollectionRunsInput!
   createdAt: DateTime
 }
 
@@ -1078,7 +1078,7 @@ type CollectionRunGroupBy {
   _max: CollectionRunMaxAggregate
   _min: CollectionRunMinAggregate
   _sum: CollectionRunSumAggregate
-  collectionId: Int
+  collectionId: Int!
   createdAt: DateTime!
   id: Int!
 }
@@ -1151,7 +1151,7 @@ input CollectionRunScalarWhereInput {
   AND: [CollectionRunScalarWhereInput!]
   NOT: [CollectionRunScalarWhereInput!]
   OR: [CollectionRunScalarWhereInput!]
-  collectionId: IntNullableFilter
+  collectionId: IntFilter
   createdAt: DateTimeFilter
   id: IntFilter
 }
@@ -1160,7 +1160,7 @@ input CollectionRunScalarWhereWithAggregatesInput {
   AND: [CollectionRunScalarWhereWithAggregatesInput!]
   NOT: [CollectionRunScalarWhereWithAggregatesInput!]
   OR: [CollectionRunScalarWhereWithAggregatesInput!]
-  collectionId: IntNullableWithAggregatesFilter
+  collectionId: IntWithAggregatesFilter
   createdAt: DateTimeWithAggregatesFilter
   id: IntWithAggregatesFilter
 }
@@ -1176,7 +1176,7 @@ input CollectionRunSumOrderByAggregateInput {
 }
 
 input CollectionRunUpdateInput {
-  collection: CollectionUpdateOneWithoutCollectionRunsNestedInput
+  collection: CollectionUpdateOneRequiredWithoutCollectionRunsNestedInput
   createdAt: DateTimeFieldUpdateOperationsInput
   responses: ResponseUpdateManyWithoutCollectionRunNestedInput
 }
@@ -1225,7 +1225,7 @@ input CollectionRunUpdateWithoutCollectionInput {
 }
 
 input CollectionRunUpdateWithoutResponsesInput {
-  collection: CollectionUpdateOneWithoutCollectionRunsNestedInput
+  collection: CollectionUpdateOneRequiredWithoutCollectionRunsNestedInput
   createdAt: DateTimeFieldUpdateOperationsInput
 }
 
@@ -1245,7 +1245,7 @@ input CollectionRunWhereInput {
   NOT: [CollectionRunWhereInput!]
   OR: [CollectionRunWhereInput!]
   collection: CollectionRelationFilter
-  collectionId: IntNullableFilter
+  collectionId: IntFilter
   createdAt: DateTimeFilter
   id: IntFilter
   responses: ResponseListRelationFilter
@@ -1324,12 +1324,10 @@ input CollectionUpdateManyWithoutMonitorNestedInput {
   upsert: [CollectionUpsertWithWhereUniqueWithoutMonitorInput!]
 }
 
-input CollectionUpdateOneWithoutCollectionRunsNestedInput {
+input CollectionUpdateOneRequiredWithoutCollectionRunsNestedInput {
   connect: CollectionWhereUniqueInput
   connectOrCreate: CollectionCreateOrConnectWithoutCollectionRunsInput
   create: CollectionCreateWithoutCollectionRunsInput
-  delete: Boolean
-  disconnect: Boolean
   update: CollectionUpdateWithoutCollectionRunsInput
   upsert: CollectionUpsertWithoutCollectionRunsInput
 }
@@ -2085,6 +2083,18 @@ input NullableStringFieldUpdateOperationsInput {
   set: String
 }
 
+input PaginateCollectionRunInput {
+  collectionIds: [Int!]!
+  cursor: String = ""
+  take: Int = 4
+}
+
+type PaginatedCollectionRunResponse {
+  cursor: String!
+  hasMore: Boolean!
+  items: [CollectionRun!]!
+}
+
 type Query {
   aggregateAssertion(cursor: AssertionWhereUniqueInput, orderBy: [AssertionOrderByWithRelationInput!], skip: Int, take: Int, where: AssertionWhereInput): AggregateAssertion!
   aggregateAssertionResult(cursor: AssertionResultWhereUniqueInput, orderBy: [AssertionResultOrderByWithRelationInput!], skip: Int, take: Int, where: AssertionResultWhereInput): AggregateAssertionResult!
@@ -2117,6 +2127,7 @@ type Query {
   groupByResponse(by: [ResponseScalarFieldEnum!]!, having: ResponseScalarWhereWithAggregatesInput, orderBy: [ResponseOrderByWithAggregationInput!], skip: Int, take: Int, where: ResponseWhereInput): [ResponseGroupBy!]!
   monitor(where: MonitorWhereUniqueInput!): Monitor
   monitors(cursor: MonitorWhereUniqueInput, distinct: [MonitorScalarFieldEnum!], orderBy: [MonitorOrderByWithRelationInput!], skip: Int, take: Int, where: MonitorWhereInput): [Monitor!]!
+  paginateCollectionRuns(data: PaginateCollectionRunInput!): PaginatedCollectionRunResponse
   request(where: RequestWhereUniqueInput!): Request
   requests(cursor: RequestWhereUniqueInput, distinct: [RequestScalarFieldEnum!], orderBy: [RequestOrderByWithRelationInput!], skip: Int, take: Int, where: RequestWhereInput): [Request!]!
   response(where: ResponseWhereUniqueInput!): Response

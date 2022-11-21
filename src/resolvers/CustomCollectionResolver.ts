@@ -1,5 +1,5 @@
-import { Request } from '@generated/type-graphql/models/Request'
-import { Arg, Ctx, Field, InputType, Mutation, Resolver } from 'type-graphql'
+import { Request } from '@generated/type-graphql/models'
+import { Arg, Ctx, Field, InputType, Mutation, Query, Resolver, Int } from "type-graphql";
 import { Context } from '../index'
 import swapSteps from '../resolvers/swapSteps'
 
@@ -23,6 +23,7 @@ class DeleteRequestInput {
   @Field()
   requestId: number
 }
+
 
 @Resolver()
 class CustomCollectionResolver {
