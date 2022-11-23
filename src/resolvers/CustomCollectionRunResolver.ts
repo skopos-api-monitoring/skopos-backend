@@ -57,7 +57,6 @@ class CustomCollectionRunResolver {
       }
     }
 
-    // const items = await prisma.collectionRun.findMany(query)
     const [items, first] = await prisma.$transaction([
       prisma.collectionRun.findMany(query),
       prisma.collectionRun.findFirst({ where }),
@@ -65,7 +64,7 @@ class CustomCollectionRunResolver {
 
     const encodedCursor =
       items.length === 0 ? '' : toCursorHash(items.at(-1).id)
-    const hasMore = items.at(-1).id !== first.id
+    const hasMore = !items.length ? false : items.at(-1).id !== first.id
 
     return {
       items,

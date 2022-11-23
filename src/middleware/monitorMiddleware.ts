@@ -73,7 +73,7 @@ const UpdateSchedule: MiddlewareFn<{ prisma: PrismaClient }> = async (
   if (await updateRules({ schedule, collectionIds })) {
     return next()
   }
-  throw new GraphQLError('failed to rule for collection run')
+  throw new GraphQLError('failed to update collection run')
 }
 
 const DeleteSchedule: MiddlewareFn<{ prisma: PrismaClient }> = async (
@@ -154,6 +154,10 @@ const UpdateSubscription: MiddlewareFn<{ prisma: PrismaClient }> = async (
   try {
     const data = await updateSubscription(topicArn, args.data.contactInfo)
     console.log('update subscription success', data)
+    // set contact info null if all empty values
+    if (!Object.values(args.data.contactInfo).every(Boolean)) {
+      args.data.contactInfo = null
+    }
   } catch (err) {
     throw new Error('Failed to remove topic')
   }
