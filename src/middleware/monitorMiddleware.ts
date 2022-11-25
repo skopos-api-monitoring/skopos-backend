@@ -154,9 +154,9 @@ const UpdateSubscription: MiddlewareFn<{ prisma: PrismaClient }> = async (
   try {
     const data = await updateSubscription(topicArn, args.data.contactInfo)
     console.log('update subscription success', data)
-    // set contact info null if all empty values
-    if (!Object.values(args.data.contactInfo).every(Boolean)) {
-      args.data.contactInfo = null
+    // set contact info undefined if one of them doesn't have value
+    if (!Object.values(args.data.contactInfo).some(Boolean)) {
+      args.data.contactInfo = {}
     }
   } catch (err) {
     throw new Error('Failed to remove topic')
