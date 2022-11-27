@@ -33,7 +33,7 @@ describe('deleteRules', () => {
     ebMock.on(DeleteRuleCommand).resolves({})
     const result = await deleteRules([1, 2, 3])
     expect(result.ok).toBe(false)
-    expect(result.count).toBe(0)
+    expect(result.count).toBe(3)
   })
 
   it('should return count 0 and ok false if deleteRule fails', async () => {
@@ -41,7 +41,7 @@ describe('deleteRules', () => {
     ebMock.on(DeleteRuleCommand).rejects()
     const result = await deleteRules([1, 2, 3])
     expect(result.ok).toBe(false)
-    expect(result.count).toBe(0)
+    expect(result.count).toBe(3)
   })
 })
 
