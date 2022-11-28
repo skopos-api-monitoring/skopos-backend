@@ -164,7 +164,24 @@ const UpdateSubscription: MiddlewareFn<{ prisma: PrismaClient }> = async (
   return next()
 }
 
+const CheckNoMonitor: MiddlewareFn<{ prisma: PrismaClient }> = async (
+  { args, context },
+  next
+) => {
+  if (!args || !args.where) return next()
+  const collection = await context.prisma.collection.findUnique({
+    where: args.where,
+  })
+  if (collection && collection.monitorId) {
+    throw new GraphQLError("can't delete collection with a monitor")
+  }
+  return next()
+}
+
 export const resolversEnhanceMap: ResolversEnhanceMap = {
+  Collection: {
+    deleteOneCollection: [UseMiddleware(CheckNoMonitor)],
+  },
   Monitor: {
     createOneMonitor: [UseMiddleware(AddSchedule), UseMiddleware(AddSNS)],
     deleteOneMonitor: [
