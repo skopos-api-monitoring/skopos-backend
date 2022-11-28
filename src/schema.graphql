@@ -2084,7 +2084,7 @@ input NullableStringFieldUpdateOperationsInput {
 }
 
 input PaginateCollectionRunInput {
-  collectionIds: [Int!]!
+  collectionId: Int!
   cursor: String = ""
   take: Int = 4
 }

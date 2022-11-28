@@ -1,12 +1,14 @@
+import { CollectionRunWhereInput } from '@generated/type-graphql/resolvers/inputs'
 import { Arg, Ctx, Field, InputType, Int, Query, Resolver } from 'type-graphql'
 import { fromCursorHash, toCursorHash } from '../helpers/cursorHelpers'
 import { Context } from '../index'
 import PaginatedCollectionRunResponse from '../objectTypes/PaginatedCollectionRunResponse'
+import { Prisma } from '@prisma/client'
 
 @InputType()
 class PaginateCollectionRunInput {
-  @Field(() => [Int], { nullable: false })
-  collectionIds: number[]
+  @Field(() => Int, { nullable: false })
+  collectionId: number
 
   @Field(() => Int, { defaultValue: 4 })
   take: number
@@ -21,44 +23,40 @@ class CustomCollectionRunResolver {
     nullable: true,
   })
   async paginateCollectionRuns(
-    @Arg('data') { collectionIds, take, cursor }: PaginateCollectionRunInput,
+    @Arg('data') { collectionId, take, cursor }: PaginateCollectionRunInput,
     @Ctx() { prisma }: Context
   ): Promise<PaginatedCollectionRunResponse> {
     const id = cursor === '' ? 1 : fromCursorHash(cursor)
-    const where: any = {
+    const where: CollectionRunWhereInput = {
       collectionId: {
-        in: collectionIds,
+        equals: collectionId,
       },
     }
-    const query: any = {
+    const query = {
       where,
       include: {
         responses: {
           include: {
             assertionResults: {
-              orderBy: [
-                {
-                  pass: 'desc',
-                },
-              ],
+              orderBy: {
+                pass: Prisma.SortOrder.desc,
+              },
             },
           },
         },
       },
       orderBy: {
-        createdAt: 'desc',
+        createdAt: Prisma.SortOrder.desc,
       },
       take,
       skip: id === 1 ? 0 : 1,
     }
-    if (cursor !== '') {
-      query.cursor = {
-        id,
-      }
-    }
 
     const [items, first] = await prisma.$transaction([
-      prisma.collectionRun.findMany(query),
+      prisma.collectionRun.findMany({
+        ...query,
+        cursor: cursor === '' ? undefined : { id },
+      }),
       prisma.collectionRun.findFirst({ where }),
     ])
 

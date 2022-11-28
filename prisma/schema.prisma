@@ -63,6 +63,8 @@ model Assertion {
   request          Request?          @relation(fields: [requestId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   createdAt        DateTime          @default(now())
   assertionResults AssertionResult[]
+
+  @@index([id, requestId])
 }
 
 model Response {
@@ -91,7 +93,7 @@ model AssertionResult {
   pass        Boolean
   actual      String
 
-  @@index([id, responseId])
+  @@index([id, assertionId, responseId])
 }
 
 model Monitor {
