@@ -24,7 +24,7 @@ model Collection {
   monitorId      Int?
   monitor        Monitor?        @relation(fields: [monitorId], references: [id], onDelete: SetNull)
 
-  @@index([id, monitorId])
+  @@index([monitorId])
 }
 
 model CollectionRun {
@@ -34,7 +34,7 @@ model CollectionRun {
   collectionId Int
   responses    Response[]
 
-  @@index([id, collectionId])
+  @@index([collectionId])
 }
 
 model Request {
@@ -51,7 +51,7 @@ model Request {
   assertions   Assertion[]
   responses    Response[]
 
-  @@index([id, collectionId])
+  @@index([collectionId])
 }
 
 model Assertion {
@@ -64,7 +64,7 @@ model Assertion {
   createdAt        DateTime          @default(now())
   assertionResults AssertionResult[]
 
-  @@index([id, requestId])
+  @@index([requestId])
 }
 
 model Response {
@@ -80,7 +80,8 @@ model Response {
   request          Request?          @relation(fields: [requestId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   requestId        Int?
 
-  @@index([id, collectionRunId, requestId])
+  @@index([collectionRunId])
+  @@index([requestId])
 }
 
 model AssertionResult {
@@ -93,7 +94,8 @@ model AssertionResult {
   pass        Boolean
   actual      String
 
-  @@index([id, assertionId, responseId])
+  @@index([responseId])
+  @@index([assertionId])
 }
 
 model Monitor {
