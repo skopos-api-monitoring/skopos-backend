@@ -12,7 +12,7 @@ CREATE TABLE "Collection" (
 CREATE TABLE "CollectionRun" (
     "id" SERIAL NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "collectionId" INTEGER,
+    "collectionId" INTEGER NOT NULL,
 
     CONSTRAINT "CollectionRun_pkey" PRIMARY KEY ("id")
 );
@@ -77,9 +77,34 @@ CREATE TABLE "Monitor" (
     "contactInfo" JSONB,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "snsTopicArn" TEXT,
+    "enabled" BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT "Monitor_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE INDEX "Collection_monitorId_idx" ON "Collection"("monitorId");
+
+-- CreateIndex
+CREATE INDEX "CollectionRun_collectionId_idx" ON "CollectionRun"("collectionId");
+
+-- CreateIndex
+CREATE INDEX "Request_collectionId_idx" ON "Request"("collectionId");
+
+-- CreateIndex
+CREATE INDEX "Assertion_requestId_idx" ON "Assertion"("requestId");
+
+-- CreateIndex
+CREATE INDEX "Response_collectionRunId_idx" ON "Response"("collectionRunId");
+
+-- CreateIndex
+CREATE INDEX "Response_requestId_idx" ON "Response"("requestId");
+
+-- CreateIndex
+CREATE INDEX "AssertionResult_responseId_idx" ON "AssertionResult"("responseId");
+
+-- CreateIndex
+CREATE INDEX "AssertionResult_assertionId_idx" ON "AssertionResult"("assertionId");
 
 -- AddForeignKey
 ALTER TABLE "Collection" ADD CONSTRAINT "Collection_monitorId_fkey" FOREIGN KEY ("monitorId") REFERENCES "Monitor"("id") ON DELETE SET NULL ON UPDATE CASCADE;

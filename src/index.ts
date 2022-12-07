@@ -3,6 +3,7 @@ import 'reflect-metadata'
 import { PrismaClient } from '@prisma/client'
 import { ApolloServer } from 'apollo-server-express'
 import path from 'path'
+import CustomCollectionRunResolver from './resolvers/CustomCollectionRunResolver'
 import CustomCollectionResolver from './resolvers/CustomCollectionResolver'
 import { buildSchema, BuildSchemaOptions } from 'type-graphql'
 import { resolvers, applyResolversEnhanceMap } from '@generated/type-graphql'
@@ -28,7 +29,11 @@ console.log('port', process.env.PORT)
 async function main() {
   applyResolversEnhanceMap(resolversEnhanceMap)
   const schemaOptions: BuildSchemaOptions = {
-    resolvers: [...resolvers, CustomCollectionResolver],
+    resolvers: [
+      ...resolvers,
+      CustomCollectionResolver,
+      CustomCollectionRunResolver,
+    ],
   }
   if (process.env.NODE_ENV !== 'production') {
     console.log('emitting schema file')
@@ -41,8 +46,6 @@ async function main() {
   console.log('attempting to connect prisma')
 
   const prisma = new PrismaClient()
-  await prisma.$connect()
-  console.log('prisma connected')
   console.log('connecting apollo server ')
 
   const server = new ApolloServer({

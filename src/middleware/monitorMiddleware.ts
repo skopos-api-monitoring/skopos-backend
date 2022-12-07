@@ -73,7 +73,7 @@ const UpdateSchedule: MiddlewareFn<{ prisma: PrismaClient }> = async (
   if (await updateRules({ schedule, collectionIds })) {
     return next()
   }
-  throw new GraphQLError('failed to rule for collection run')
+  throw new GraphQLError('failed to update collection run')
 }
 
 const DeleteSchedule: MiddlewareFn<{ prisma: PrismaClient }> = async (
@@ -154,13 +154,34 @@ const UpdateSubscription: MiddlewareFn<{ prisma: PrismaClient }> = async (
   try {
     const data = await updateSubscription(topicArn, args.data.contactInfo)
     console.log('update subscription success', data)
+    // set contact info undefined if one of them doesn't have value
+    if (!Object.values(args.data.contactInfo).some(Boolean)) {
+      args.data.contactInfo = {}
+    }
   } catch (err) {
     throw new Error('Failed to remove topic')
   }
   return next()
 }
 
+const CheckNoMonitor: MiddlewareFn<{ prisma: PrismaClient }> = async (
+  { args, context },
+  next
+) => {
+  if (!args || !args.where) return next()
+  const collection = await context.prisma.collection.findUnique({
+    where: args.where,
+  })
+  if (collection && collection.monitorId) {
+    throw new GraphQLError("can't delete collection with a monitor")
+  }
+  return next()
+}
+
 export const resolversEnhanceMap: ResolversEnhanceMap = {
+  Collection: {
+    deleteOneCollection: [UseMiddleware(CheckNoMonitor)],
+  },
   Monitor: {
     createOneMonitor: [UseMiddleware(AddSchedule), UseMiddleware(AddSNS)],
     deleteOneMonitor: [
